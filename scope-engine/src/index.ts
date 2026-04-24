@@ -11,9 +11,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 import { fetchAllData } from './fetchers.js';
 import {
-  scoreTenYear,
-  scoreDXY,
-  scoreRiskAppetite,
+  scoreMacroConditions,
   scoreStablecoin,
   scorePriceVsMA,
   scoreMAArrangement,
@@ -58,14 +56,11 @@ async function main(): Promise<void> {
 
   // --- 周期层 ---
 
-  // 10Y 折现率压力
-  indicators.push(scoreTenYear(data.fred10Y || []));
-
-  // DXY
-  indicators.push(scoreDXY(data.yahooDXY || []));
-
-  // 风险偏好 QQQ/VIX
-  indicators.push(scoreRiskAppetite(data.yahooQQQ || [], data.yahooVIX || []));
+  // 宏观环境（v4.0: 合并原 10Y + DXY + 风险偏好，8分）
+  indicators.push(scoreMacroConditions(
+    data.fred10Y || [], data.yahooDXY || [],
+    data.yahooQQQ || [], data.yahooVIX || [],
+  ));
 
   // 稳定币水位
   indicators.push(
@@ -122,16 +117,25 @@ async function main(): Promise<void> {
       ? parseFloat(data.binanceFunding[data.binanceFunding.length - 1].fundingRate)
       : 0;
 
+  // OI 7日变化率（共享变量，供 OI 质量和 Basis 使用）
+  let oiChange7dPct = 0;
+  const oiHist = data.binanceOIHistory || [];
+  if (oiHist.length >= 2) {
+    const oiNow = oiHist[oiHist.length - 1].sumOpenInterest;
+    const oi7dAgo = oiHist[0].sumOpenInterest;
+    oiChange7dPct = oi7dAgo > 0 ? ((oiNow - oi7dAgo) / oi7dAgo) * 100 : 0;
+  }
+
   // OI 质量（内含 Funding 上限修正）
   indicators.push(
     scoreOIQuality(
-      data.binanceOIHistory || [],
+      oiHist,
       data.binanceKlines || [],
       latestFundingRate
     )
   );
 
-  // 年化 Basis
+  // 年化 Basis（v4.0: 传入 OI 变化率作为杠杆趋势信号）
   let annualizedBasisPct = 0;
   if (data.binanceQuarterlyPrice && btcPrice > 0 && (data.daysToExpiry ?? 0) > 0) {
     annualizedBasisPct = calcAnnualizedBasis(
@@ -140,7 +144,7 @@ async function main(): Promise<void> {
       data.daysToExpiry!
     );
   }
-  indicators.push(scoreBasis(annualizedBasisPct));
+  indicators.push(scoreBasis(annualizedBasisPct, oiChange7dPct));
 
   // 清算脆弱性（CoinGlass 数据 → proxy 兜底: OI+Funding+Price）
   indicators.push(
@@ -200,6 +204,10 @@ async function main(): Promise<void> {
       value: data.fearGreedIndex.value,
       label: data.fearGreedIndex.label,
     };
+  }
+  // Bitbo ETF AUM 快照（供 Claude Skill 对比上日值推导流入方向）
+  if (data.bitboETFAUM) {
+    (reference as any).bitboETFAUM = data.bitboETFAUM;
   }
 
   // 5. 组装输出

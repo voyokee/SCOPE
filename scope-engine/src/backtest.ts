@@ -613,6 +613,75 @@ function simulatePositions(snapshots: NormalizedSnapshot[]) {
 }
 
 // ============================================================
+// 模块 5b: 买卖信号回测
+// ============================================================
+
+import { generateSignal, type Signal } from './signal.js';
+
+interface SignalBacktestResult {
+  signal: Signal;
+  count: number;
+  mean1D: number;
+  mean3D: number;
+  mean7D: number;
+  dates: string[];
+}
+
+function backtestSignals(
+  snapshots: NormalizedSnapshot[],
+  forwardReturns: Map<string, ForwardReturns>,
+) {
+  // 用历史评分序列模拟信号生成
+  const signalEvents: { date: string; signal: Signal; confidence: number; reasoning: string }[] = [];
+
+  for (let i = 0; i < snapshots.length; i++) {
+    const s = snapshots[i];
+    // 构建评分历史（最近 5 天）
+    const histStart = Math.max(0, i - 4);
+    const scoreHistory = snapshots.slice(histStart, i + 1).map(ss => ss.score);
+    const prevState = i > 0 ? snapshots[i - 1].state : null;
+    const prevStructure = i > 0 ? snapshots[i - 1].layers.structure : null;
+
+    const result = generateSignal(
+      s.score, scoreHistory, s.state, prevState,
+      s.layers.vulnerability, s.layers.structure, prevStructure,
+    );
+    signalEvents.push({ date: s.date, signal: result.signal, confidence: result.confidence, reasoning: result.reasoning });
+  }
+
+  // 按信号类型分组计算收益
+  const groups: Record<string, { returns1D: number[]; returns3D: number[]; returns7D: number[]; dates: string[] }> = {};
+  for (const evt of signalEvents) {
+    if (!groups[evt.signal]) groups[evt.signal] = { returns1D: [], returns3D: [], returns7D: [], dates: [] };
+    const fwd = forwardReturns.get(evt.date);
+    if (fwd) {
+      if (fwd['1D'] != null) groups[evt.signal].returns1D.push(fwd['1D']!);
+      if (fwd['3D'] != null) groups[evt.signal].returns3D.push(fwd['3D']!);
+      if (fwd['7D'] != null) groups[evt.signal].returns7D.push(fwd['7D']!);
+    }
+    groups[evt.signal].dates.push(evt.date);
+  }
+
+  const results: SignalBacktestResult[] = Object.entries(groups).map(([signal, g]) => ({
+    signal: signal as Signal,
+    count: g.dates.length,
+    mean1D: mean(g.returns1D),
+    mean3D: mean(g.returns3D),
+    mean7D: mean(g.returns7D),
+    dates: g.dates,
+  }));
+
+  // 信号翻转频率
+  let flips = 0;
+  for (let i = 1; i < signalEvents.length; i++) {
+    if (signalEvents[i].signal !== signalEvents[i - 1].signal) flips++;
+  }
+  const flipRate = signalEvents.length > 1 ? flips / (signalEvents.length - 1) : 0;
+
+  return { results, signalEvents, flipRate };
+}
+
+// ============================================================
 // 模块 6: 指标分解分析
 // ============================================================
 
@@ -776,6 +845,7 @@ function generateReport(
   simResults: ReturnType<typeof simulatePositions>,
   indAnalysis: ReturnType<typeof analyzeIndicators>,
   improvements: string[],
+  signalAnalysis: ReturnType<typeof backtestSignals>,
 ): string {
   const L: string[] = [];
   const p = (s: string) => L.push(s);
@@ -921,6 +991,19 @@ function generateReport(
     blank();
   }
 
+  // 3b. 买卖信号回测
+  p('## 3b. 买卖信号回测 (v4.0)');
+  blank();
+  p('| 信号 | 天数 | 1D均值% | 3D均值% | 7D均值% | 日期 |');
+  p('|------|------|---------|---------|---------|------|');
+  for (const sr of signalAnalysis.results.sort((a, b) => b.mean3D - a.mean3D)) {
+    const datesStr = sr.dates.length <= 5 ? sr.dates.join(', ') : `${sr.dates.slice(0, 3).join(', ')}... (${sr.dates.length}天)`;
+    p(`| ${sr.signal} | ${sr.count} | ${sr.mean1D.toFixed(2)} | ${sr.mean3D.toFixed(2)} | ${sr.mean7D.toFixed(2)} | ${datesStr} |`);
+  }
+  blank();
+  p(`> 信号翻转频率: ${(signalAnalysis.flipRate * 100).toFixed(0)}% (每 ${signalAnalysis.flipRate > 0 ? (1 / signalAnalysis.flipRate).toFixed(1) : '∞'} 天翻转一次)`);
+  blank();
+
   // 4. 指标分解
   p('## 4. 指标分解分析');
   blank();
@@ -1006,10 +1089,14 @@ function main() {
   // 7. 改进建议
   const improvements = generateImprovements(corrAll, stateAnalysis, indAnalysis);
 
-  // 8. 生成报告
+  // 8. 买卖信号回测
+  process.stderr.write('回测买卖信号...\n');
+  const signalAnalysis = backtestSignals(snapshots, fwdReturns);
+
+  // 9. 生成报告
   const report = generateReport(
     snapshots, fwdReturns, corrAll, corrRT,
-    stateAnalysis, simResults, indAnalysis, improvements,
+    stateAnalysis, simResults, indAnalysis, improvements, signalAnalysis,
   );
 
   console.log(report);

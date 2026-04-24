@@ -12,154 +12,88 @@ import type { AllFetchedData, ETFFlowDay, LiquidationInfo, StablecoinPurchasingP
 // ============================================================
 
 /**
- * 2) 10Y 折现率压力（4分）
- * 规则：
- * - 10Y 明显下行，20D 趋势向下 → 4
- * - 10Y 震荡走平 → 2-3
- * - 10Y 高位上行或重新加速上行 → 0-1
+ * 2-4) 宏观环境综合评分 (8分) — v4.0
+ * 合并原 10Y 折现率(4分) + DXY(3分) + 风险偏好(3分)
+ *
+ * 三个子信号各自归一化到 0-1，加权合并后映射到 0-8 分
+ * 权重基于回测预测力: DXY(ρ=0.38) 0.40 + 10Y(ρ=0.19) 0.35 + Risk(ρ=0.16) 0.25
+ *
+ * 子信号方向: 1=利好BTC（宽松/弱美元/risk-on），0=利空BTC
  */
-export function scoreTenYear(
-  fred10Y: { date: string; value: number }[]
-): IndicatorResult {
-  if (!fred10Y || fred10Y.length < 20) {
-    return {
-      id: 'cycle.ten-year', name: '10Y 折现率压力', layer: 'cycle',
-      score: 2, maxScore: 4, reasoning: '数据不足，给予中性分', source: 'auto',
-    };
-  }
-
-  const values = fred10Y.map((d) => d.value);
-  const current = values[values.length - 1];
-  const slope20d = linearSlope(values, 20);
-
-  // 判断趋势方向
-  // slope20d > 0.001 = 上行，< -0.001 = 下行，中间 = 走平
-  let score: number;
-  let reasoning: string;
-
-  if (slope20d < -0.001) {
-    // 明显下行
-    score = 4;
-    reasoning = `10Y ${current.toFixed(2)}%，20D 斜率 ${(slope20d * 100).toFixed(3)} 明显下行`;
-  } else if (slope20d > 0.001) {
-    // 上行
-    if (slope20d > 0.003) {
-      score = 0;
-      reasoning = `10Y ${current.toFixed(2)}%，20D 斜率 ${(slope20d * 100).toFixed(3)} 加速上行`;
-    } else {
-      score = 1;
-      reasoning = `10Y ${current.toFixed(2)}%，20D 斜率 ${(slope20d * 100).toFixed(3)} 温和上行`;
-    }
-  } else {
-    // 震荡走平
-    score = 2.5;
-    reasoning = `10Y ${current.toFixed(2)}%，20D 斜率接近 0 震荡走平`;
-  }
-
-  return {
-    id: 'cycle.ten-year', name: '10Y 折现率压力', layer: 'cycle',
-    score, maxScore: 4, reasoning, rawValue: current, source: 'auto',
-  };
-}
-
-/**
- * 3) DXY（3分）
- * 规则：
- * - 位于 20D、50D 下方，且 20D 向下 → 3
- * - 震荡中性 → 1-2
- * - 强势站上均线，且 20D 向上 → 0
- */
-export function scoreDXY(yahooDXY: YahooPrice[]): IndicatorResult {
-  if (!yahooDXY || yahooDXY.length < 50) {
-    return {
-      id: 'cycle.dxy', name: 'DXY', layer: 'cycle',
-      score: 1.5, maxScore: 3, reasoning: '数据不足，给予中性分', source: 'auto',
-    };
-  }
-
-  const closes = yahooDXY.map((d) => d.close);
-  const current = closes[closes.length - 1];
-  const ma20 = sma(closes, 20);
-  const ma50 = sma(closes, 50);
-  const slope20d = linearSlope(closes, 20);
-
-  let score: number;
-  let reasoning: string;
-
-  const belowMA20 = current < ma20;
-  const belowMA50 = current < ma50;
-  const slopeDown = slope20d < -0.0005;
-  const slopeUp = slope20d > 0.0005;
-
-  if (belowMA20 && belowMA50 && slopeDown) {
-    score = 3;
-    reasoning = `DXY ${current.toFixed(2)} < 20D(${ma20.toFixed(2)}) < 50D(${ma50.toFixed(2)})，20D 向下`;
-  } else if (!belowMA20 && !belowMA50 && slopeUp) {
-    score = 0;
-    reasoning = `DXY ${current.toFixed(2)} > 20D(${ma20.toFixed(2)}) > 50D(${ma50.toFixed(2)})，20D 向上`;
-  } else if (belowMA20 || belowMA50) {
-    score = 2;
-    reasoning = `DXY ${current.toFixed(2)}，位于均线附近偏弱，20D 斜率 ${slopeDown ? '向下' : '走平'}`;
-  } else {
-    score = 1;
-    reasoning = `DXY ${current.toFixed(2)}，位于均线上方但未强势，20D 斜率 ${slopeUp ? '向上' : '走平'}`;
-  }
-
-  return {
-    id: 'cycle.dxy', name: 'DXY', layer: 'cycle',
-    score, maxScore: 3, reasoning, rawValue: current, source: 'auto',
-  };
-}
-
-/**
- * 4) 风险偏好 QQQ/VIX（3分）
- * 规则：
- * - 纳指站上 50D，VIX 低位或回落 → 3
- * - 震荡中性 → 1-2
- * - 纳指弱于 50D，VIX 上行 → 0
- */
-export function scoreRiskAppetite(
+export function scoreMacroConditions(
+  fred10Y: { date: string; value: number }[],
+  yahooDXY: YahooPrice[],
   yahooQQQ: YahooPrice[],
-  yahooVIX: YahooPrice[]
+  yahooVIX: YahooPrice[],
 ): IndicatorResult {
-  if (!yahooQQQ || yahooQQQ.length < 50 || !yahooVIX || yahooVIX.length < 20) {
+  const signals: { name: string; value: number; weight: number; detail: string }[] = [];
+
+  // 子信号 1: 10Y 趋势 (slope < 0 = 下行 = 利好BTC → 1)
+  if (fred10Y?.length >= 20) {
+    const values = fred10Y.map(d => d.value);
+    const current = values[values.length - 1];
+    const slope = linearSlope(values, 20);
+    // slope 范围约 [-0.003, +0.003], 映射: -0.003→1, 0→0.5, +0.003→0
+    const normalized = Math.max(0, Math.min(1, 0.5 - slope * 166));
+    signals.push({ name: '10Y', value: normalized, weight: 0.35,
+      detail: `${current.toFixed(2)}% slope=${(slope * 100).toFixed(2)}` });
+  }
+
+  // 子信号 2: DXY 弱势 (均线下方+下行 = 利好BTC → 1)
+  if (yahooDXY?.length >= 50) {
+    const closes = yahooDXY.map(d => d.close);
+    const current = closes[closes.length - 1];
+    const ma20 = sma(closes, 20);
+    const ma50 = sma(closes, 50);
+    const slope = linearSlope(closes, 20);
+    let normalized = 0.5;
+    if (current < ma20) normalized += 0.2;
+    if (current < ma50) normalized += 0.15;
+    if (slope < -0.001) normalized += 0.15;
+    else if (slope > 0.001) normalized -= 0.2;
+    normalized = Math.max(0, Math.min(1, normalized));
+    signals.push({ name: 'DXY', value: normalized, weight: 0.40,
+      detail: `${current.toFixed(1)} ma20=${ma20.toFixed(1)}` });
+  }
+
+  // 子信号 3: 风险偏好 (QQQ强+VIX低 = risk-on → 1)
+  if (yahooQQQ?.length >= 50 && yahooVIX?.length >= 20) {
+    const qqqCloses = yahooQQQ.map(d => d.close);
+    const qqqCurrent = qqqCloses[qqqCloses.length - 1];
+    const qqq50d = sma(qqqCloses, 50);
+    const vixCurrent = yahooVIX[yahooVIX.length - 1].close;
+    const vixSlope = linearSlope(yahooVIX.map(d => d.close), 10);
+    let normalized = 0.5;
+    if (qqqCurrent > qqq50d) normalized += 0.25; else normalized -= 0.25;
+    if (vixCurrent < 20) normalized += 0.15;
+    else if (vixCurrent > 30) normalized -= 0.15;
+    if (vixSlope < -0.005) normalized += 0.1;
+    normalized = Math.max(0, Math.min(1, normalized));
+    signals.push({ name: 'Risk', value: normalized, weight: 0.25,
+      detail: `QQQ=${qqqCurrent.toFixed(0)} VIX=${vixCurrent.toFixed(1)}` });
+  }
+
+  if (signals.length === 0) {
     return {
-      id: 'cycle.risk-appetite', name: '风险偏好(QQQ/VIX)', layer: 'cycle',
-      score: 1.5, maxScore: 3, reasoning: '数据不足，给予中性分', source: 'auto',
+      id: 'cycle.macro-conditions', name: '宏观环境', layer: 'cycle',
+      score: 4, maxScore: 8, reasoning: '数据不足，给予中性分', source: 'auto',
     };
   }
 
-  const qqqCloses = yahooQQQ.map((d) => d.close);
-  const qqqCurrent = qqqCloses[qqqCloses.length - 1];
-  const qqq50d = sma(qqqCloses, 50);
-  const qqqAbove50d = qqqCurrent > qqq50d;
+  // 加权合并
+  const totalWeight = signals.reduce((s, sig) => s + sig.weight, 0);
+  const composite = signals.reduce((s, sig) => s + sig.value * sig.weight, 0) / totalWeight;
 
-  const vixCloses = yahooVIX.map((d) => d.close);
-  const vixCurrent = vixCloses[vixCloses.length - 1];
-  const vixLow = vixCurrent < 20;
-  const vixSlope = linearSlope(vixCloses, 10);
-  const vixFalling = vixSlope < -0.005;
-
-  let score: number;
-  let reasoning: string;
-
-  if (qqqAbove50d && (vixLow || vixFalling)) {
-    score = 3;
-    reasoning = `QQQ ${qqqCurrent.toFixed(2)} > 50D(${qqq50d.toFixed(2)})，VIX ${vixCurrent.toFixed(1)} ${vixLow ? '低位' : '回落'}`;
-  } else if (!qqqAbove50d && !vixLow && vixSlope > 0.005) {
-    score = 0;
-    reasoning = `QQQ ${qqqCurrent.toFixed(2)} < 50D(${qqq50d.toFixed(2)})，VIX ${vixCurrent.toFixed(1)} 上行`;
-  } else if (qqqAbove50d) {
-    score = 2;
-    reasoning = `QQQ 站上 50D，但 VIX ${vixCurrent.toFixed(1)} 偏高/中性`;
-  } else {
-    score = 1;
-    reasoning = `QQQ 弱于 50D，VIX ${vixCurrent.toFixed(1)} 中性`;
-  }
+  // 映射到 0-8，步长 0.5
+  const score = Math.round(composite * 8 * 2) / 2;
+  const detail = signals.map(s => `${s.name}=${(s.value * 100).toFixed(0)}%(${s.detail})`).join(', ');
 
   return {
-    id: 'cycle.risk-appetite', name: '风险偏好(QQQ/VIX)', layer: 'cycle',
-    score, maxScore: 3, reasoning, source: 'auto',
+    id: 'cycle.macro-conditions', name: '宏观环境', layer: 'cycle',
+    score, maxScore: 8,
+    reasoning: `综合${(composite * 100).toFixed(0)}%: ${detail}`,
+    rawValue: composite,
+    source: 'auto',
   };
 }
 
@@ -552,13 +486,19 @@ export function scoreRelativeStrength(
 // ============================================================
 
 /**
- * 1) Funding（6分）
- * 绝对阈值打分（规则 1 优先级）：
- * - |F| ≤ 0.01% → 6（中性）
- * - +0.01% ~ +0.03% → 5（温和偏多）
- * - -0.03% ~ -0.01% → 4（温和偏空）
- * - |F| 0.03%~0.06% → 2-3
- * - |F| > 0.06% → 0-1
+ * 1) Funding（6分）— v4.0 动态评分
+ * 拆为 水平分(3分) + 趋势分(3分)
+ *
+ * 水平分（基于最新一期 funding rate 绝对值）：
+ * - |F| ≤ 0.01% → 3（中性）
+ * - |F| 0.01%~0.03% → 2（温和偏离）
+ * - |F| 0.03%~0.06% → 1（过热）
+ * - |F| > 0.06% → 0（极端）
+ *
+ * 趋势分（比较近 3 期 vs 前 3 期均值，检测方向变化）：
+ * - 绝对值向中性回归 → 3（去杠杆/修复）
+ * - 绝对值稳定 → 1.5（中性）
+ * - 绝对值加速偏离 → 0（杠杆堆积/恶化）
  */
 export function scoreFunding(fundingRates: FundingRate[]): IndicatorResult {
   if (!fundingRates || fundingRates.length === 0) {
@@ -568,30 +508,55 @@ export function scoreFunding(fundingRates: FundingRate[]): IndicatorResult {
     };
   }
 
-  // 取最新一期 funding rate
+  // 子分 A: 水平分 (0-3)
   const latest = parseFloat(fundingRates[fundingRates.length - 1].fundingRate);
   const absRate = Math.abs(latest);
-  const pct = latest * 100; // 转为百分比
+  const pct = latest * 100;
 
-  let score: number;
-  let reasoning: string;
-
+  let levelScore: number;
+  let levelNote: string;
   if (absRate <= 0.0001) {
-    score = 6;
-    reasoning = `Funding ${pct.toFixed(4)}%，基本中性`;
-  } else if (latest > 0.0001 && latest <= 0.0003) {
-    score = 5;
-    reasoning = `Funding +${pct.toFixed(4)}%，温和偏多`;
-  } else if (latest < -0.0001 && latest >= -0.0003) {
-    score = 4;
-    reasoning = `Funding ${pct.toFixed(4)}%，温和偏空`;
-  } else if (absRate > 0.0003 && absRate <= 0.0006) {
-    score = latest > 0 ? 2 : 3;
-    reasoning = `Funding ${pct.toFixed(4)}%，${latest > 0 ? '偏多' : '偏空'}过热`;
+    levelScore = 3;
+    levelNote = '中性';
+  } else if (absRate <= 0.0003) {
+    levelScore = 2;
+    levelNote = latest > 0 ? '温和偏多' : '温和偏空';
+  } else if (absRate <= 0.0006) {
+    levelScore = 1;
+    levelNote = '过热';
   } else {
-    score = latest > 0 ? 0 : 1;
-    reasoning = `Funding ${pct.toFixed(4)}%，极端${latest > 0 ? '多头' : '空头'}拥挤`;
+    levelScore = 0;
+    levelNote = '极端拥挤';
   }
+
+  // 子分 B: 趋势分 (0-3)
+  let trendScore = 1.5;
+  let trendNote = '趋势数据不足';
+  if (fundingRates.length >= 6) {
+    const rates = fundingRates.map(f => parseFloat(f.fundingRate));
+    const recent3 = rates.slice(-3);
+    const prior3 = rates.slice(-6, -3);
+    const recent3Avg = recent3.reduce((s, v) => s + v, 0) / recent3.length;
+    const prior3Avg = prior3.reduce((s, v) => s + v, 0) / prior3.length;
+    const recentAbs = Math.abs(recent3Avg);
+    const priorAbs = Math.abs(prior3Avg);
+
+    if (priorAbs > 0.00005 && recentAbs < priorAbs * 0.7) {
+      // 绝对值下降 30%+ → 向中性回归
+      trendScore = 3;
+      trendNote = '向中性回归';
+    } else if (recentAbs > priorAbs * 1.5 && recentAbs > 0.0001) {
+      // 绝对值上升 50%+ 且超过噪声水平 → 加速偏离
+      trendScore = 0;
+      trendNote = '加速偏离';
+    } else {
+      trendScore = 1.5;
+      trendNote = '稳定';
+    }
+  }
+
+  const score = levelScore + trendScore;
+  const reasoning = `Funding ${pct.toFixed(4)}%，水平${levelScore}/3(${levelNote}) + 趋势${trendScore}/3(${trendNote})`;
 
   return {
     id: 'vulnerability.funding', name: 'Funding', layer: 'vulnerability',
@@ -683,36 +648,68 @@ export function scoreOIQuality(
 }
 
 /**
- * 3B) 年化 Basis（3分）
- * 绝对阈值打分：
- * - < 8% → 3
- * - 8%-12% → 2
- * - 12%-18% → 1
- * - > 18% → 0
+ * 3B) 年化 Basis（3分）— v4.0 动态评分
+ * 拆为 水平分(1.5分) + 杠杆趋势分(1.5分)
+ *
+ * 水平分（基于当前 basis 绝对值）：
+ * - < 8% → 1.5（健康）
+ * - 8%-15% → 1（温和）
+ * - 15%-20% → 0.5（偏热）
+ * - > 20% → 0（过热）
+ *
+ * 杠杆趋势分（结合 OI 7D 变化率判断杠杆堆积方向）：
+ * - 低 basis + OI 平稳/收缩 → 1.5（去杠杆完成）
+ * - 高 basis + OI 暴增 → 0（杠杆堆积危险）
+ * - 其他 → 0.75（中性）
+ *
+ * @param oiChange7dPct OI 7日变化率（%），来自 index.ts 共享计算
  */
 export function scoreBasis(
-  annualizedBasisPct: number
+  annualizedBasisPct: number,
+  oiChange7dPct: number = 0,
 ): IndicatorResult {
-  let score: number;
-  let reasoning: string;
-
+  // 子分 A: 水平 (0-1.5)
+  let levelScore: number;
+  let levelNote: string;
   if (annualizedBasisPct < 0) {
-    // 负基差（贴水）
-    score = 3;
-    reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}%，贴水，无过热`;
+    levelScore = 1.5;
+    levelNote = '贴水';
   } else if (annualizedBasisPct < 8) {
-    score = 3;
-    reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}% < 8%，健康`;
-  } else if (annualizedBasisPct < 12) {
-    score = 2;
-    reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}%，8%-12% 区间，温和`;
-  } else if (annualizedBasisPct < 18) {
-    score = 1;
-    reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}%，12%-18%，偏热`;
+    levelScore = 1.5;
+    levelNote = '健康';
+  } else if (annualizedBasisPct < 15) {
+    levelScore = 1;
+    levelNote = '温和';
+  } else if (annualizedBasisPct < 20) {
+    levelScore = 0.5;
+    levelNote = '偏热';
   } else {
-    score = 0;
-    reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}% > 18%，过热`;
+    levelScore = 0;
+    levelNote = '过热';
   }
+
+  // 子分 B: 杠杆趋势 (0-1.5)
+  let trendScore: number;
+  let trendNote: string;
+  if (annualizedBasisPct < 5 && oiChange7dPct < 5) {
+    // 低 basis + OI 不增长 = 去杠杆完成，健康
+    trendScore = 1.5;
+    trendNote = '去杠杆';
+  } else if (annualizedBasisPct > 10 && oiChange7dPct > 15) {
+    // 高 basis + OI 暴增 = 杠杆堆积
+    trendScore = 0;
+    trendNote = '杠杆堆积';
+  } else if (annualizedBasisPct > 8 && oiChange7dPct > 10) {
+    // basis 偏高 + OI 明显增长 = 温和恶化
+    trendScore = 0.5;
+    trendNote = '温和加杠杆';
+  } else {
+    trendScore = 0.75;
+    trendNote = '中性';
+  }
+
+  const score = levelScore + trendScore;
+  const reasoning = `年化基差 ${annualizedBasisPct.toFixed(2)}%，水平${levelScore}/1.5(${levelNote}) + 趋势${trendScore}/1.5(${trendNote}，OI 7D ${oiChange7dPct > 0 ? '+' : ''}${oiChange7dPct.toFixed(1)}%)`;
 
   return {
     id: 'vulnerability.basis', name: '年化 Basis', layer: 'vulnerability',
@@ -859,11 +856,15 @@ export function scoreSpotCVD(klines: Kline[]): IndicatorResult {
  * ETF 周期水位（4 分）+ ETF 短期承接（10 分）
  * 基于 CoinGlass ETF 每日净流量数据
  */
+/**
+ * ETF 周期水位 (6分) — v4.0 提权（原 4 分）
+ * 释放 2 分来自周期层合并（原 10Y+DXY+Risk=10分 → macro-conditions=8分）
+ */
 export function scoreETFCycle(etfFlows: ETFFlowDay[]): IndicatorResult {
   if (!etfFlows || etfFlows.length < 10) {
     return {
       id: 'cycle.etf-cycle', name: 'ETF 周期水位', layer: 'cycle',
-      score: 2, maxScore: 4, reasoning: 'ETF 数据不足，给予中性分', source: 'auto',
+      score: 3, maxScore: 6, reasoning: 'ETF 数据不足，给予中性分', source: 'auto',
     };
   }
 
@@ -877,30 +878,29 @@ export function scoreETFCycle(etfFlows: ETFFlowDay[]): IndicatorResult {
   let score: number;
   let reasoning: string;
 
-  // 单位：美元
   const sum10m = (sum10 / 1e6).toFixed(1);
   const sum20m = (sum20 / 1e6).toFixed(1);
 
   if (sum20 > 0 && sum10 > 0) {
-    score = 4;
+    score = 6;
     reasoning = `20D 净流 +${sum20m}M 且 10D 净流 +${sum10m}M，双正`;
   } else if (sum20 > 0) {
+    score = 4.5;
+    reasoning = `20D 净流 +${sum20m}M，10D 净流 ${sum10m}M 减弱`;
+  } else if (Math.abs(sum20) < Math.abs(sum20) * 0.1 + 1e6) {
     score = 3;
-    reasoning = `20D 净流 +${sum20m}M，10D 净流 ${sum10m}M 一般`;
-  } else if (Math.abs(sum20) < sum20 * 0.1) {
-    score = 2;
     reasoning = `20D 净流 ${sum20m}M 接近持平`;
   } else if (sum10 < 0 && sum20 < 0) {
     score = 0;
     reasoning = `10D 净流 ${sum10m}M 和 20D 净流 ${sum20m}M 都为负`;
   } else {
-    score = 1;
+    score = 1.5;
     reasoning = `20D 净流 ${sum20m}M 明显为负`;
   }
 
   return {
     id: 'cycle.etf-cycle', name: 'ETF 周期水位', layer: 'cycle',
-    score, maxScore: 4, reasoning, source: 'auto',
+    score, maxScore: 6, reasoning, source: 'auto',
   };
 }
 

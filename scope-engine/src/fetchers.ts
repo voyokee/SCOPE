@@ -505,9 +505,9 @@ export interface ETFFlowDay {
 
 /**
  * 获取 BTC ETF 每日净流量（最近 20 个交易日）
- * 使用 CoinGlass 内部 API
+ * 使用 CoinGlass 内部 API（不稳定，经常 404）
  */
-export async function fetchCoinGlassETF(): Promise<ETFFlowDay[]> {
+async function fetchCoinGlassETFInternal(): Promise<ETFFlowDay[]> {
   const url = `${COINGLASS_API}/index/bitcoin-etf-total-netflow?`;
   const res = await fetchWithTimeout(url, {
     headers: { 'User-Agent': 'Mozilla/5.0' },
@@ -526,6 +526,75 @@ export async function fetchCoinGlassETF(): Promise<ETFFlowDay[]> {
       totalNetInflow: Number(d.totalNetInflow),
     }))
     .slice(-20);
+}
+
+/** ETF AUM 快照（来自 Bitbo 页面解析） */
+export interface ETFAUMSnapshot {
+  /** 总 AUM（美元） */
+  totalAUM: number;
+  /** 总 BTC 持仓 */
+  totalBTC: number;
+  /** 数据获取时间 */
+  fetchedAt: string;
+}
+
+/**
+ * 从 Bitbo.io 获取 ETF 总持仓数据（静态 HTML，稳定可用）
+ * 返回当前 ETF AUM 和 BTC 持仓的快照
+ * 可与上一日 state.json 中的值比较，推导流入/流出方向
+ */
+export async function fetchBitboETFAUM(): Promise<ETFAUMSnapshot> {
+  const url = 'https://bitbo.io/etf/';
+  const res = await fetchWithTimeout(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' },
+  }, 15000);
+  if (!res.ok) throw new Error(`Bitbo ETF: ${res.status}`);
+  const html = await res.text();
+
+  // 解析 Bitbo 页面中 ETF 总持仓数据
+  // 实际 HTML 格式:
+  //   Total Holdings...
+  //   1,319,170<span class="currency">BTC</span>
+  //   <span class="holdings-value...">(102.49<span class="abbrv">B)</span></span>
+  // 匹配: 数字,数字 + 任意标签 + BTC + 任意内容 + (数字 + B)
+  const holdingsPattern = /([\d,]+)\s*<span[^>]*>BTC<\/span>\s*<span[^>]*>\(([\d.]+)<span[^>]*>B\)<\/span>/g;
+  const allMatches = [...html.matchAll(holdingsPattern)];
+  let totalAUM = 0;
+  let totalBTC = 0;
+
+  if (allMatches.length > 0) {
+    // 取 BTC 数量最大的条目（即 Total Holdings）
+    for (const m of allMatches) {
+      const btc = parseInt(m[1].replace(/,/g, ''), 10);
+      if (btc > totalBTC) {
+        totalBTC = btc;
+        totalAUM = parseFloat(m[2]) * 1e9;
+      }
+    }
+  }
+
+  if (totalAUM === 0 && totalBTC === 0) {
+    throw new Error('Bitbo ETF: failed to parse AUM/BTC from HTML');
+  }
+
+  return { totalAUM, totalBTC, fetchedAt: new Date().toISOString() };
+}
+
+/**
+ * ETF 数据获取 — Fallback Chain
+ * L0: CoinGlass（如果可用，提供精确日流量）
+ * L1: 返回空数组（scorer 使用中性分，Bitbo AUM 作为参考数据单独获取）
+ */
+export async function fetchCoinGlassETF(): Promise<ETFFlowDay[]> {
+  // L0: CoinGlass（不稳定但数据最完整）
+  try {
+    const data = await fetchCoinGlassETFInternal();
+    if (data.length >= 5) return data;
+  } catch { /* CoinGlass 失败，静默 */ }
+
+  // L1: 无可靠的免费 ETF 日流量 API，返回空数组
+  // Bitbo AUM 快照通过 fetchBitboETFAUM() 单独获取，作为参考数据
+  return [];
 }
 
 /** 清算数据 */
@@ -607,6 +676,7 @@ export interface AllFetchedData {
   deribitSkew: { skew25d: number };
   coinbasePrice: number;
   coinglassETF: ETFFlowDay[];
+  bitboETFAUM: ETFAUMSnapshot;
   coinglassLiquidation: LiquidationInfo;
   defiLlamaStablecoins: StablecoinPurchasingPower;
   fearGreedIndex: FearGreedData;
@@ -660,6 +730,7 @@ export async function fetchAllData(): Promise<{
     { key: 'deribitSkew', fn: () => fetchDeribitSkew() },
     { key: 'coinbasePrice', fn: () => fetchCoinbasePrice() },
     { key: 'coinglassETF', fn: () => fetchCoinGlassETF() },
+    { key: 'bitboETFAUM', fn: () => fetchBitboETFAUM() },
     { key: 'coinglassLiquidation', fn: () => fetchCoinGlassLiquidation() },
     { key: 'defiLlamaStablecoins', fn: () => fetchDefiLlamaStablecoins() },
     { key: 'fearGreedIndex', fn: () => fetchFearGreedIndex() },
