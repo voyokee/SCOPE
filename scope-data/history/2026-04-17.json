@@ -1,0 +1,39 @@
+{
+  "date": "2026-04-17",
+  "btcPrice": 75085.33,
+  "state": "B",
+  "prevState": "B",
+  "score": 72,
+  "prevScore": 77,
+  "layers": {
+    "cycle": 17.5,
+    "structure": 32.5,
+    "vulnerability": 21.5
+  },
+  "indicators": {
+    "cycle.fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "FFR 3.64%, 2Y 3.76%(昨日FRED缓存), 利差+12bps, 暂停期中性" },
+    "cycle.ten-year": { "score": 2.5, "max": 4, "source": "auto", "reasoning": "10Y 4.29%, 震荡走平" },
+    "cycle.dxy": { "score": 3, "max": 3, "source": "auto", "reasoning": "DXY 98.19 < 20D(99.25) < 50D(98.69)" },
+    "cycle.risk-appetite": { "score": 3, "max": 3, "source": "auto", "reasoning": "QQQ 640 > 50D, VIX 18.2" },
+    "cycle.etf-cycle": { "score": 3, "max": 4, "source": "AI", "reasoning": "30D仍正(>$710M), 近日从$411M降至$26M, 20D正但10D减速" },
+    "cycle.stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D +0.31%, 7D持平+0.02%" },
+    "structure.price-vs-ma": { "score": 5, "max": 10, "source": "auto", "reasoning": "$75,085 > 50D(69996), < 200D(86984)" },
+    "structure.ma-arrangement": { "score": 4, "max": 6, "source": "auto", "reasoning": "修复中, 20D上拐, 50D向上" },
+    "structure.etf-short-term": { "score": 6, "max": 10, "source": "AI", "reasoning": "4/16仅+$26M(前日+$411M), 承接大幅缩量但仍为正" },
+    "structure.coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "Premium 0.034%" },
+    "structure.spot-cvd": { "score": 0.5, "max": 4, "source": "auto", "reasoning": "Taker buy 47.6% 卖方主导, CVD -2.41%" },
+    "structure.stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "auto", "reasoning": "319.0B, 7D +0.93% 30D +1.37% 强扩张" },
+    "structure.relative-strength": { "score": 6, "max": 6, "source": "auto", "reasoning": "BTC 20D +13.1% vs QQQ +7.7%, Dominance +0.72%" },
+    "structure.wave-structure": { "score": 6, "max": 8, "source": "AI", "reasoning": "HL(70466→70506→73310)+HH(72761→73790→76038) 清晰看涨修复" },
+    "vulnerability.funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding +0.003% 中性" },
+    "vulnerability.oi-quality": { "score": 7, "max": 7, "source": "auto", "reasoning": "OI +5.3% vs Price +2.9%, 健康上涨" },
+    "vulnerability.liquidation": { "score": 2.5, "max": 5, "source": "auto", "reasoning": "ATR分位8% 波动率偏低" },
+    "vulnerability.basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化1.38% < 8% 健康" },
+    "vulnerability.position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew✓ L/S偏极✗ TopTrader✓ + 交易所净流入+1[数据不可用]" }
+  },
+  "etfDataSources": ["BullBear-Farside(4/16:+$26.1M)", "WalletPilot-cache(4/14:+$411M)"],
+  "fedDataSources": ["FRED-cache(4/14)"],
+  "macroDesensitization": { "active": true, "daysQualified": 1 },
+  "fearGreed": 21,
+  "note": "Spot CVD骤降至0.5/4, ETF承接缩量至$26M, 总分从77回落至72"
+}

@@ -1,0 +1,42 @@
+{
+  "date": "2026-03-30",
+  "btcPrice": 66194.24,
+  "state": "C",
+  "score": 45,
+  "layers": {
+    "cycle": 9,
+    "structure": 16.5,
+    "vulnerability": 19
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "暂停期中性；dot plot 年内仅1次降息；2Y 3.96%高于FFR上沿；市场比Fed更偏鹰" },
+      "ten-year": { "score": 0, "max": 4, "source": "auto", "reasoning": "10Y 4.42%，20D斜率加速上行" },
+      "dxy": { "score": 1, "max": 3, "source": "auto", "reasoning": "DXY 100.16，位于均线上方但未强势" },
+      "risk-appetite": { "score": 0, "max": 3, "source": "auto", "reasoning": "QQQ 562.58 < 50D(606.47)，VIX 31.0上行" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "AI", "reasoning": "20D净流为正(+$1.3B/30D)，但10D净流为负(-$289M/7D)" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D扩张1.16%，7D持平" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 0, "max": 10, "source": "auto", "reasoning": "价格66194远低于200D(90839)，距200D -27.1%" },
+      "ma-arrangement": { "score": 2.5, "max": 6, "source": "auto", "reasoning": "均线缠绕，20D=69978 50D=68723 200D=90839" },
+      "etf-short-term": { "score": 3, "max": 10, "source": "AI", "reasoning": "5D净流为负，3/27单日流出$226M，但非连续多日大量流出" },
+      "coinbase-premium": { "score": 1, "max": 3, "source": "auto", "reasoning": "Premium -0.084%，轻微为负" },
+      "spot-cvd": { "score": 4, "max": 4, "source": "auto", "reasoning": "Taker buy ratio 56.6%，买方主导且3日未连续下行" },
+      "stablecoin-purchasing-power": { "score": 1, "max": 3, "source": "auto", "reasoning": "7D -0.14%，30D +2.14%，基本持平" },
+      "relative-strength": { "score": 3, "max": 6, "source": "auto", "reasoning": "BTC 20D -5.4% vs QQQ -7.4%小幅为正(3/4)；Dominance 20D下降(0/2)" },
+      "wave-structure": { "score": 2, "max": 8, "source": "AI", "reasoning": "LH(76k→72k)/LL(67.4k→65k)看跌结构，但未破绝对低点60k" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding 0.0003%，基本中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "auto", "reasoning": "价格7D -6.6%，OI增幅8.7%，温和" },
+      "liquidation": { "score": 3, "max": 5, "source": "auto", "reasoning": "proxy: OI +8.7%，Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化基差1.72% < 8%，健康" },
+      "position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew非极端✓ L/S偏极✗ TopTrader非极端✓ 交易所净流入假设健康✓" }
+    }
+  },
+  "previousState": "C",
+  "previousScore": 36,
+  "stateChange": "none",
+  "macroDesensitization": false
+}

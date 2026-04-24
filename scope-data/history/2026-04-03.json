@@ -1,0 +1,37 @@
+{
+  "date": "2026-04-03",
+  "state": "C",
+  "score": 46,
+  "btcPrice": 66579.5,
+  "layers": {
+    "cycle": 10,
+    "structure": 15,
+    "vulnerability": 20.5
+  },
+  "indicators": {
+    "fed-path": { "score": 4, "max": 8, "source": "AI", "note": "中性暂停，关税引发增长与通胀双重不确定性" },
+    "ten-year": { "score": 0, "max": 4, "source": "auto", "note": "10Y 4.33%，20D斜率加速上行" },
+    "dxy": { "score": 1, "max": 3, "source": "auto", "note": "DXY 100.02，均线上方但不强势，斜率走平" },
+    "risk-appetite": { "score": 1, "max": 3, "source": "auto", "note": "QQQ弱于50D，VIX 23.9中性" },
+    "etf-cycle": { "score": 2, "max": 4, "source": "fallback", "note": "数据不可用，保守中性分" },
+    "stablecoin-water": { "score": 2, "max": 3, "source": "auto", "note": "30D +0.50%扩张，7D -0.02%持平" },
+    "price-vs-ma": { "score": 0, "max": 10, "source": "auto", "note": "价格66580远低于200D 89879，距-25.9%" },
+    "ma-arrangement": { "score": 2.5, "max": 6, "source": "auto", "note": "均线缠绕，20D=69358 50D=68686 200D=89879" },
+    "etf-short-term": { "score": 5, "max": 10, "source": "fallback", "note": "数据不可用，保守中性分" },
+    "coinbase-premium": { "score": 1, "max": 3, "source": "auto", "note": "Premium -0.022%，轻微为负" },
+    "spot-cvd": { "score": 0.5, "max": 4, "source": "auto", "note": "Taker buy ratio 40.9%，卖方主导" },
+    "stablecoin-purchasing-power": { "score": 2, "max": 3, "source": "auto", "note": "314.9B，30D +1.93%，7D +0.15%" },
+    "relative-strength": { "score": 3, "max": 6, "source": "auto", "note": "BTC 20D -6.5% vs QQQ -3.9%接近持平(2/4)，Dominance持平(1/2)" },
+    "wave-structure": { "score": 1, "max": 8, "source": "AI", "note": "LH/LL结构，自76k高点持续走低高走低低，已跌破65618关键低点" },
+    "funding": { "score": 6, "max": 6, "source": "auto", "note": "Funding -0.0008%，中性" },
+    "oi-quality": { "score": 4, "max": 7, "source": "auto", "note": "价格7D +0.3%，OI 7D +3.1%，中性" },
+    "liquidation": { "score": 4.5, "max": 5, "source": "auto", "note": "proxy：OI平稳，Funding中性" },
+    "basis": { "score": 3, "max": 3, "source": "auto", "note": "年化基差1.92%，健康" },
+    "position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "note": "Skew非极端✓，L/S 72%区间✓，TopTrader极端✗；净流入假设健康+1" }
+  },
+  "reference": {
+    "fearGreed": { "value": 9, "label": "Extreme Fear" },
+    "ma50": 68686.29,
+    "ma200": 89878.81
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "date": "2026-04-13",
+  "btcPrice": 74417.99,
+  "state": "B",
+  "score": 73,
+  "layers": {
+    "cycle": 16,
+    "structure": 33.5,
+    "vulnerability": 23.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest"
+      },
+      "ten-year": {
+        "score": 2.5,
+        "max": 4,
+        "source": "est"
+      },
+      "dxy": {
+        "score": 2.5,
+        "max": 3,
+        "source": "est",
+        "reasoning": "DXY ~98.2"
+      },
+      "risk-appetite": {
+        "score": 3,
+        "max": 3,
+        "source": "est",
+        "reasoning": "强反弹日, 风险偏好回暖"
+      },
+      "etf-cycle": {
+        "score": 2,
+        "max": 4,
+        "source": "est"
+      },
+      "stablecoin": {
+        "score": 1,
+        "max": 3,
+        "source": "est"
+      }
+    },
+    "structure": {
+      "price-vs-ma": {
+        "score": 4,
+        "max": 10,
+        "source": "calc",
+        "reasoning": "$74,418 > 50D($69,297), < 200D"
+      },
+      "ma-arrangement": {
+        "score": 4,
+        "max": 6,
+        "source": "calc",
+        "reasoning": "20D(69357)>50D(69297), 修复中"
+      },
+      "etf-short-term": {
+        "score": 4,
+        "max": 10,
+        "source": "est",
+        "reasoning": "WalletPilot 1D: -$291M 流出"
+      },
+      "coinbase-premium": {
+        "score": 3,
+        "max": 3,
+        "source": "est",
+        "reasoning": "大涨日, Premium 大概率强"
+      },
+      "spot-cvd": {
+        "score": 4,
+        "max": 4,
+        "source": "est",
+        "reasoning": "日涨+5.20%, 买方强势主导"
+      },
+      "stablecoin-pp": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "relative-strength": {
+        "score": 5.5,
+        "max": 6,
+        "source": "est",
+        "reasoning": "BTC 强势反弹, 大概率跑赢"
+      },
+      "wave-structure": {
+        "score": 6,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "新HH 74.9k(intra), 连续HH/HL确认"
+      }
+    },
+    "vulnerability": {
+      "funding": {
+        "score": 6,
+        "max": 6,
+        "source": "est"
+      },
+      "oi-quality": {
+        "score": 7,
+        "max": 7,
+        "source": "est"
+      },
+      "liquidation": {
+        "score": 4.5,
+        "max": 5,
+        "source": "est"
+      },
+      "basis": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "position-crowding": {
+        "score": 3,
+        "max": 4,
+        "source": "est"
+      }
+    }
+  },
+  "btc1dChange": 5.2,
+  "backtest": true,
+  "note": "回测重建; V型反弹, 新HH 74.9k"
+}

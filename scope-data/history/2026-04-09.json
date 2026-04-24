@@ -1,0 +1,137 @@
+{
+  "date": "2026-04-09",
+  "btcPrice": 71787.97,
+  "state": "B",
+  "score": 69,
+  "layers": {
+    "cycle": 14.5,
+    "structure": 31,
+    "vulnerability": 23.5
+  },
+  "stateTransition": "C->B (升级确认: 04-08 score 63>=62, 04-09 score 69>=62, 连续2日达标)",
+  "indicators": {
+    "cycle": {
+      "fed-path": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "FFR ~3.64%, 2Y ~3.81%, 暂停期中性"
+      },
+      "ten-year": {
+        "score": 2.5,
+        "max": 4,
+        "source": "est",
+        "reasoning": "10Y ~4.30%, 震荡走平"
+      },
+      "dxy": {
+        "score": 2,
+        "max": 3,
+        "source": "est",
+        "reasoning": "DXY ~99.5, 弱化趋势中"
+      },
+      "risk-appetite": {
+        "score": 2,
+        "max": 3,
+        "source": "est",
+        "reasoning": "QQQ ~605, 修复中但未突破"
+      },
+      "etf-cycle": {
+        "score": 2,
+        "max": 4,
+        "source": "est",
+        "reasoning": "ETF 数据缺失, 保守中性"
+      },
+      "stablecoin": {
+        "score": 1,
+        "max": 3,
+        "source": "est",
+        "reasoning": "稳定币水位持平"
+      }
+    },
+    "structure": {
+      "price-vs-ma": {
+        "score": 4,
+        "max": 10,
+        "source": "calc",
+        "reasoning": "$71,788 > 50D($68,886), < 200D($87,543)"
+      },
+      "ma-arrangement": {
+        "score": 3,
+        "max": 6,
+        "source": "calc",
+        "reasoning": "20D(68711) ≈ 50D(68886), 均线缠绕修复中"
+      },
+      "etf-short-term": {
+        "score": 5,
+        "max": 10,
+        "source": "est",
+        "reasoning": "ETF 数据缺失, 保守中性"
+      },
+      "coinbase-premium": {
+        "score": 3,
+        "max": 3,
+        "source": "est",
+        "reasoning": "价格上行日, Premium 大概率为正"
+      },
+      "spot-cvd": {
+        "score": 3,
+        "max": 4,
+        "source": "est",
+        "reasoning": "日涨+1.01%, 买方温和主导"
+      },
+      "stablecoin-pp": {
+        "score": 3,
+        "max": 3,
+        "source": "est",
+        "reasoning": "稳定币购买力持续扩张"
+      },
+      "relative-strength": {
+        "score": 5,
+        "max": 6,
+        "source": "est",
+        "reasoning": "BTC 连续跑赢 QQQ, Dom 上升"
+      },
+      "wave-structure": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "HL 从 65k→66.3k 确认, 上行至 73.1k(intra)"
+      }
+    },
+    "vulnerability": {
+      "funding": {
+        "score": 6,
+        "max": 6,
+        "source": "est",
+        "reasoning": "Funding 中性区间"
+      },
+      "oi-quality": {
+        "score": 7,
+        "max": 7,
+        "source": "est",
+        "reasoning": "价格+7.3%(7D), OI 增幅温和"
+      },
+      "liquidation": {
+        "score": 4.5,
+        "max": 5,
+        "source": "est",
+        "reasoning": "OI 平稳, Funding 中性"
+      },
+      "basis": {
+        "score": 3,
+        "max": 3,
+        "source": "est",
+        "reasoning": "年化基差 <8%, 健康"
+      },
+      "position-crowding": {
+        "score": 3,
+        "max": 4,
+        "source": "est",
+        "reasoning": "仓位结构大概率健康"
+      }
+    }
+  },
+  "btc1dChange": 1.01,
+  "backtest": true,
+  "note": "回测重建: 基于价格数据+插值宏观指标, 非实时脚本产出"
+}

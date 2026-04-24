@@ -1,0 +1,122 @@
+{
+  "date": "2026-04-10",
+  "btcPrice": 72962.7,
+  "state": "B",
+  "score": 71,
+  "layers": {
+    "cycle": 14.5,
+    "structure": 33,
+    "vulnerability": 23.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest"
+      },
+      "ten-year": {
+        "score": 2.5,
+        "max": 4,
+        "source": "est"
+      },
+      "dxy": {
+        "score": 2,
+        "max": 3,
+        "source": "est",
+        "reasoning": "DXY ~99, 继续弱化"
+      },
+      "risk-appetite": {
+        "score": 2,
+        "max": 3,
+        "source": "est"
+      },
+      "etf-cycle": {
+        "score": 2,
+        "max": 4,
+        "source": "est"
+      },
+      "stablecoin": {
+        "score": 1,
+        "max": 3,
+        "source": "est"
+      }
+    },
+    "structure": {
+      "price-vs-ma": {
+        "score": 4,
+        "max": 10,
+        "source": "calc",
+        "reasoning": "$72,963 > 50D($69,005), < 200D"
+      },
+      "ma-arrangement": {
+        "score": 4,
+        "max": 6,
+        "source": "calc",
+        "reasoning": "20D(68913)→50D(69005), 修复中, 20D上拐"
+      },
+      "etf-short-term": {
+        "score": 5,
+        "max": 10,
+        "source": "est"
+      },
+      "coinbase-premium": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "spot-cvd": {
+        "score": 4,
+        "max": 4,
+        "source": "est",
+        "reasoning": "日涨+1.64%, 买方强势"
+      },
+      "stablecoin-pp": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "relative-strength": {
+        "score": 5,
+        "max": 6,
+        "source": "est"
+      },
+      "wave-structure": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "HH 73.4k(intra), HL 从 65k 持续抬高"
+      }
+    },
+    "vulnerability": {
+      "funding": {
+        "score": 6,
+        "max": 6,
+        "source": "est"
+      },
+      "oi-quality": {
+        "score": 7,
+        "max": 7,
+        "source": "est"
+      },
+      "liquidation": {
+        "score": 4.5,
+        "max": 5,
+        "source": "est"
+      },
+      "basis": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "position-crowding": {
+        "score": 3,
+        "max": 4,
+        "source": "est"
+      }
+    }
+  },
+  "btc1dChange": 1.64,
+  "backtest": true,
+  "note": "回测重建"
+}

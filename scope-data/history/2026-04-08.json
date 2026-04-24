@@ -1,0 +1,58 @@
+{
+  "date": "2026-04-08",
+  "btcPrice": 71313.16,
+  "state": "C",
+  "score": 63,
+  "layers": {
+    "cycle": 13,
+    "structure": 26.5,
+    "vulnerability": 23.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "FFR 3.64%, 2Y 3.84%, 利差+20bps, 暂停期中性偏鹰" },
+      "ten-year": { "score": 1, "max": 4, "source": "auto", "reasoning": "10Y 4.34%, 20D斜率上行" },
+      "dxy": { "score": 2, "max": 3, "source": "auto", "reasoning": "DXY 98.94, 均线附近偏弱, 走平" },
+      "risk-appetite": { "score": 1, "max": 3, "source": "auto", "reasoning": "QQQ弱于50D, VIX 25.8" },
+      "etf-cycle": { "score": 3, "max": 4, "source": "AI", "reasoning": "30D+$435M正;10D经Apr6+$471M修复;Apr7回吐-$142M" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D+0.35%, 7D持平" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 4, "max": 10, "source": "auto", "reasoning": "价格>50D(68784)<200D(88715)" },
+      "ma-arrangement": { "score": 1, "max": 6, "source": "auto", "reasoning": "空头排列, 斜率收敛" },
+      "etf-short-term": { "score": 6, "max": 10, "source": "AI", "reasoning": "5D净正+$288M估;Apr6+$471M/Apr7-$142M交替;最新日负" },
+      "coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "Premium-0.002%, 接近持平" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "auto", "reasoning": "Taker buy 43.9%, 卖方主导" },
+      "stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "auto", "reasoning": "稳定币316.4B, 强扩张" },
+      "relative-strength": { "score": 6, "max": 6, "source": "auto", "reasoning": "vsQQQ+5.1%(4/4); Dom 20D上升(2/2)" },
+      "wave-structure": { "score": 4, "max": 8, "source": "AI", "reasoning": "短期HL+HH; 大级别LH/LL未扭转" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "0.006%基本中性" },
+      "oi-quality": { "score": 7, "max": 7, "source": "auto", "reasoning": "价格+4.7%, OI-1.4%, 健康" },
+      "liquidation": { "score": 4.5, "max": 5, "source": "auto", "reasoning": "proxy: OI平稳+Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化2.43%<8%" },
+      "position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew✓ L/S✗ Top✓ Net✓(假设)" }
+    }
+  },
+  "etfDataSources": {
+    "L0_bullbear": { "date": "2026-04-07", "flow": -142000000, "aum": 83830573952, "commitTime": "2026-04-08T02:29:39Z" },
+    "L2_walletpilot": { "asOf": "2026-04-02", "daily": 9000000, "7d": -203000000, "30d": 435000000 },
+    "L3_coindesk": { "date": "2026-04-06", "flow": 471000000 }
+  },
+  "fedDataSources": {
+    "fred_dff": { "value": 3.64, "date": "2026-04-06" },
+    "fred_dgs2": { "value": 3.84, "date": "2026-04-06" },
+    "fred_unrate": { "value": 4.3, "date": "2026-03" },
+    "fred_pcepi": { "value": 128.969, "date": "2026-01" }
+  },
+  "reference": {
+    "fearGreed": 17,
+    "btc1dChange": -0.85,
+    "btc7dChange": 4.70,
+    "ma50": 68784,
+    "ma200": 88715,
+    "fundingRate": 0.006
+  },
+  "previousState": { "date": "2026-04-07", "state": "C", "score": 45 }
+}

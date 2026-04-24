@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-31",
+  "btcPrice": 68236.93,
+  "state": "C",
+  "previousState": "C",
+  "score": 45,
+  "previousScore": 45,
+  "layers": {
+    "cycle": 9,
+    "structure": 17.5,
+    "vulnerability": 18
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 5, "max": 8, "source": "AI", "reasoning": "暂停期，内部鸽派压力增加(异见票要求降息)，宽松预期稳定但不强" },
+      "ten-year": { "score": 0, "max": 4, "source": "auto", "reasoning": "10Y 4.44%，20D斜率0.456加速上行" },
+      "dxy": { "score": 0, "max": 3, "source": "auto", "reasoning": "DXY 100.33 > 20D(99.58) > 50D(98.34)，20D向上" },
+      "risk-appetite": { "score": 0, "max": 3, "source": "auto", "reasoning": "QQQ 558 < 50D(605)，VIX 30.6上行" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "AI", "reasoning": "20日净流正(~+1100M)但10日转负(~-198M)" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D扩张0.98%，7D持平-0.05%" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 0, "max": 10, "source": "auto", "reasoning": "价格68237远低于200D(90603)，距200D -24.7%" },
+      "ma-arrangement": { "score": 2.5, "max": 6, "source": "auto", "reasoning": "均线缠绕，20D=69910 50D=68697 200D=90603" },
+      "etf-short-term": { "score": 1, "max": 10, "source": "AI", "reasoning": "5日净流-303M，仅1/5天净流入，承接明显转弱" },
+      "coinbase-premium": { "score": 0, "max": 3, "source": "auto", "reasoning": "Premium -0.154%，Coinbase卖盘偏强" },
+      "spot-cvd": { "score": 4, "max": 4, "source": "auto", "reasoning": "Taker buy ratio 61.7%，买方主导" },
+      "stablecoin-purchasing-power": { "score": 2, "max": 3, "source": "auto", "reasoning": "稳定币314B，30D+2.00%，7D+0.07%" },
+      "relative-strength": { "score": 6, "max": 6, "source": "auto", "reasoning": "BTC 20D -2.8% vs QQQ -8.2%，相对收益+5.4%；Dominance 20D上升0.59%" },
+      "wave-structure": { "score": 2, "max": 8, "source": "AI", "reasoning": "3/17高点76000后形成LH(72026)+LL(65000)，趋势转空" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding 0.0001%，基本中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "auto", "reasoning": "价格7D -3.3%，OI增幅5.3%，中性" },
+      "liquidation": { "score": 3, "max": 5, "source": "auto", "reasoning": "proxy: OI 7D +5.3%，Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化基差1.91% < 8%，健康" },
+      "position-crowding": { "score": 2, "max": 4, "source": "auto+AI", "reasoning": "Skew健康✓; L/S 82%单边✗; TopTrader 8%极端✗; 交易所净流入假设健康✓" }
+    }
+  },
+  "macroDesensitization": {
+    "active": false,
+    "daysQualified": 1,
+    "reason": "BTC相对强弱6/6≥5，但仅1天，需连续3天激活"
+  },
+  "stateTransition": {
+    "direction": "none",
+    "reason": "总分45，维持C状态。距C→B升级(≥62)差17分；距C→D降级(≤37且脆弱性≤10)安全"
+  },
+  "fearGreed": 11,
+  "reference": {
+    "ma50": 68697,
+    "ma200": 90603,
+    "btc1dChange": 2.16,
+    "btc7dChange": -3.29,
+    "fundingRate": 0.0001
+  }
+}

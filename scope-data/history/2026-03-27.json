@@ -1,0 +1,50 @@
+{
+  "date": "2026-03-27",
+  "btcPrice": 68730.89,
+  "state": "C",
+  "score": 52,
+  "previousState": "C",
+  "previousScore": 61,
+  "layers": {
+    "cycle": 9,
+    "structure": 23.5,
+    "vulnerability": 19.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 5, "max": 8, "source": "AI", "note": "中性暂停，利率3.50-3.75%，全年预期仅1次降息25bp" },
+      "ten-year": { "score": 0, "max": 4, "source": "auto", "note": "10Y 4.33%，20D加速上行" },
+      "dxy": { "score": 0, "max": 3, "source": "auto", "note": "DXY 99.90 > 20D(99.39) > 50D(98.29)" },
+      "risk-appetite": { "score": 0, "max": 3, "source": "auto", "note": "QQQ 573.79 < 50D(606.69)，VIX 27.4" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "auto-fallback", "note": "ETF数据不可用，中性分" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "note": "30D扩张1.41%，7D持平-0.01%" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 0, "max": 10, "source": "auto", "note": "68731 远低于 200D(91563)，距200D -24.9%" },
+      "ma-arrangement": { "score": 2.5, "max": 6, "source": "auto", "note": "均线缠绕 20D=70383 50D=69002 200D=91563" },
+      "etf-short-term": { "score": 5, "max": 10, "source": "auto-fallback", "note": "ETF数据不可用，中性分" },
+      "coinbase-premium": { "score": 1, "max": 3, "source": "auto", "note": "Premium -0.057%，轻微为负" },
+      "spot-cvd": { "score": 4, "max": 4, "source": "auto", "note": "Taker buy ratio 52.1%，买方主导" },
+      "stablecoin-purchasing-power": { "score": 2, "max": 3, "source": "auto", "note": "稳定币总量314.1B，30D+2.25%，7D+0.12%" },
+      "relative-strength": { "score": 4, "max": 6, "source": "auto", "note": "BTC/QQQ 20D +7.7%，Dominance -1.20%" },
+      "wave-structure": { "score": 5, "max": 8, "source": "AI", "note": "HL连续6个(60k→68.1k)，HH不连续(76k→72k LH)，HL面临考验" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "note": "0.0029%，基本中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "auto", "note": "价格7D -2.5%，OI增幅0.6%，Funding无上限约束" },
+      "liquidation": { "score": 4.5, "max": 5, "source": "auto-proxy", "note": "proxy: OI平稳，Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "note": "年化基差2.18% < 8%" },
+      "position-crowding": { "score": 2, "max": 4, "source": "auto+AI", "note": "Skew正常(+1)，L/S极端偏多(-0)，TopTrader极端(-0)，交易所净流入健康(+1)" }
+    }
+  },
+  "macroDesensitization": {
+    "active": false,
+    "daysQualified": 0,
+    "relativeStrength": 4
+  },
+  "stateTransition": {
+    "from": "C",
+    "to": "C",
+    "trigger": null
+  }
+}

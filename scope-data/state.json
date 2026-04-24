@@ -1,0 +1,41 @@
+{
+    "date": "2026-04-24",
+    "state": "B",
+    "score": 74,
+    "layers": { "cycle": 18, "structure": 33.5, "vulnerability": 22 },
+    "pendingUpgrade": null,
+    "fastReEntry": {
+      "available": false,
+      "preDowngradePositionCap": null,
+      "count": 0,
+      "dates": [],
+      "frozenUntil": null
+    },
+    "circuitBreaker": {
+      "active": false,
+      "frozenUntil": null,
+      "reason": null
+    },
+    "macroDesensitization": {
+      "active": false,
+      "daysQualified": 0,
+      "lastQualifiedDate": null,
+      "note": "Apr21+22 RS>=5/6(2天), Apr23+24 RS=4/6 streak断裂"
+    },
+    "downgradeTrigger": {
+      "keyLevel": null,
+      "date": null
+    },
+    "stateHistory": [
+      { "date": "2026-04-09", "state": "B", "score": 69, "event": "C->B升级确认(连续2日>=62)" },
+      { "date": "2026-04-16", "state": "B", "score": 77 },
+      { "date": "2026-04-17", "state": "B", "score": 72 },
+      { "date": "2026-04-18", "state": "B", "score": 73 },
+      { "date": "2026-04-19", "state": "B", "score": 76 },
+      { "date": "2026-04-20", "state": "B", "score": 73 },
+      { "date": "2026-04-21", "state": "B", "score": 79 },
+      { "date": "2026-04-22", "state": "B", "score": 80 },
+      { "date": "2026-04-23", "state": "B", "score": 72 },
+      { "date": "2026-04-24", "state": "B", "score": 74 }
+    ]
+  }

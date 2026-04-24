@@ -1,0 +1,48 @@
+{
+  "date": "2026-04-05",
+  "btcPrice": 69034,
+  "state": "C",
+  "score": 48,
+  "reconstructed": true,
+  "reconstructionNote": "周日，BTC从66.6K反弹至69K突破50D，price-vs-MA从0跳至3；周末无股市/ETF新数据",
+  "layers": {
+    "cycle": 10,
+    "structure": 17,
+    "vulnerability": 21
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "延续：暂停期中性" },
+      "ten-year": { "score": 0, "max": 4, "source": "estimated", "reasoning": "周末无新数据，延续Apr3" },
+      "dxy": { "score": 1, "max": 3, "source": "estimated", "reasoning": "延续Apr3" },
+      "risk-appetite": { "score": 1, "max": 3, "source": "estimated", "reasoning": "周末无股市数据" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "estimated", "reasoning": "周末无ETF交易" },
+      "stablecoin": { "score": 2, "max": 3, "source": "estimated", "reasoning": "延续" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 3, "max": 10, "source": "estimated", "reasoning": "69034>50D(~68680)! 突破50D；但<200D距>20%→基础分3" },
+      "ma-arrangement": { "score": 2, "max": 6, "source": "estimated", "reasoning": "价格刚站上50D，排列仍混乱" },
+      "etf-short-term": { "score": 4.5, "max": 10, "source": "estimated", "reasoning": "周末无新ETF数据" },
+      "coinbase-premium": { "score": 1.5, "max": 3, "source": "estimated", "reasoning": "周末交易量低，premium波动" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "estimated", "reasoning": "卖方仍主导" },
+      "stablecoin-purchasing-power": { "score": 2, "max": 3, "source": "estimated", "reasoning": "延续" },
+      "relative-strength": { "score": 2.5, "max": 6, "source": "estimated", "reasoning": "周末无QQQ对比，BTC反弹但无法计算相对强弱" },
+      "wave-structure": { "score": 1.5, "max": 8, "source": "estimated", "reasoning": "反弹站上50D形成潜在HL，但结构未确认" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "estimated", "reasoning": "中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "estimated", "reasoning": "价格反弹，OI变化温和" },
+      "liquidation": { "score": 4, "max": 5, "source": "estimated", "reasoning": "proxy：低风险" },
+      "basis": { "score": 3, "max": 3, "source": "estimated", "reasoning": "<8%" },
+      "position-crowding": { "score": 3, "max": 3, "source": "estimated", "reasoning": "延续" },
+      "exchange-netflow": { "score": 1, "max": 1, "source": "estimated", "reasoning": "假设健康" }
+    }
+  },
+  "rawData": {
+    "btc1dChange": 2.58,
+    "ma50": 68680,
+    "ma200": 89750,
+    "fearGreed": 10
+  },
+  "previousState": { "date": "2026-04-04", "state": "C", "score": 45 }
+}

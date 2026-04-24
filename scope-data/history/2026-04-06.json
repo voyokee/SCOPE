@@ -1,0 +1,49 @@
+{
+  "date": "2026-04-06",
+  "btcPrice": 68854,
+  "state": "C",
+  "score": 51,
+  "reconstructed": true,
+  "reconstructionNote": "周一开市，ETF录得+$471M大幅流入(CoinDesk数据)；BTC持于50D附近；stock市场数据重新可用",
+  "layers": {
+    "cycle": 11,
+    "structure": 18.5,
+    "vulnerability": 21.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "暂停期中性，周一无新FOMC事件" },
+      "ten-year": { "score": 1, "max": 4, "source": "estimated", "reasoning": "10Y向Apr7的1分过渡" },
+      "dxy": { "score": 1, "max": 3, "source": "estimated", "reasoning": "DXY仍偏弱" },
+      "risk-appetite": { "score": 1, "max": 3, "source": "estimated", "reasoning": "QQQ仍弱于50D" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "estimated", "reasoning": "+$471M单日流入改善近期，但20D仍偏负" },
+      "stablecoin": { "score": 2, "max": 3, "source": "estimated", "reasoning": "延续" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 3, "max": 10, "source": "estimated", "reasoning": "68854≈50D(~68670)，勉强站上；<200D距>20%→基础分3" },
+      "ma-arrangement": { "score": 1.5, "max": 6, "source": "estimated", "reasoning": "向Apr7的1分过渡" },
+      "etf-short-term": { "score": 6, "max": 10, "source": "estimated", "reasoning": "+$471M大幅流入！与前几日交替，承接改善" },
+      "coinbase-premium": { "score": 1.5, "max": 3, "source": "estimated", "reasoning": "接近持平" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "estimated", "reasoning": "卖方仍主导" },
+      "stablecoin-purchasing-power": { "score": 2.5, "max": 3, "source": "estimated", "reasoning": "稳定币继续扩张" },
+      "relative-strength": { "score": 2, "max": 6, "source": "estimated", "reasoning": "BTC持平但QQQ可能反弹，相对强弱过渡" },
+      "wave-structure": { "score": 2, "max": 8, "source": "estimated", "reasoning": "65K双底支撑初现(65000+65712)，但LH结构未扭转" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "estimated", "reasoning": "中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "estimated", "reasoning": "OI稳定，价格横盘" },
+      "liquidation": { "score": 4.5, "max": 5, "source": "estimated", "reasoning": "proxy：低风险" },
+      "basis": { "score": 3, "max": 3, "source": "estimated", "reasoning": "<8%" },
+      "position-crowding": { "score": 3, "max": 3, "source": "estimated", "reasoning": "延续" },
+      "exchange-netflow": { "score": 1, "max": 1, "source": "estimated", "reasoning": "假设健康" }
+    }
+  },
+  "etfDataSources": ["CoinDesk(Apr6 +$471M)", "WalletPilot(asOf Apr2: 7D -$203M, 30D +$435M)"],
+  "rawData": {
+    "btc1dChange": -0.26,
+    "ma50": 68670,
+    "ma200": 89700,
+    "fearGreed": 10
+  },
+  "previousState": { "date": "2026-04-05", "state": "C", "score": 48 }
+}

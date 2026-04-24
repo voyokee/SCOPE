@@ -1,0 +1,37 @@
+{
+  "date": "2026-04-23",
+  "btcPrice": 78365.55,
+  "state": "B",
+  "score": 72,
+  "layers": { "cycle": 18, "structure": 31.5, "vulnerability": 22 },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 3, "max": 8, "source": "AI", "reasoning": "FFR 3.64%, 2Y 3.71%, higher for longer; FOMC Apr28-29下周" },
+      "ten-year": { "score": 4, "max": 4, "source": "auto", "reasoning": "10Y 4.30%, 斜率-0.132" },
+      "dxy": { "score": 3, "max": 3, "source": "auto", "reasoning": "DXY 98.64 < 20D < 50D" },
+      "risk-appetite": { "score": 3, "max": 3, "source": "auto", "reasoning": "QQQ 655>50D, VIX 19.2" },
+      "etf-cycle": { "score": 3, "max": 4, "source": "AI", "reasoning": "20D正, 10D一般(Apr18-$18M, Apr21-$28M, Apr22=$0)" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D+1.58%, 7D-0.04%持平" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 6, "max": 10, "source": "auto", "reasoning": ">50D(71031), <200D(85679), 距-8.5%" },
+      "ma-arrangement": { "score": 4, "max": 6, "source": "auto", "reasoning": "修复中" },
+      "etf-short-term": { "score": 5, "max": 10, "source": "AI", "reasoning": "5D仅1天正(Apr17+$664M), 其余0或负, 承接一般" },
+      "coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "0.046%" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "auto", "reasoning": "47.5%卖方主导, CVD-2.54%" },
+      "stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "auto", "reasoning": "319.5B, 7D+0.43% 30D+1.72%" },
+      "relative-strength": { "score": 4, "max": 6, "source": "auto", "reasoning": "BTC+17% vs QQQ+11.5%(4/4); Dom-0.67%(0/2)" },
+      "wave-structure": { "score": 7, "max": 8, "source": "AI", "reasoning": "★ 新HH确认! Apr22 high 79,473>78,333; HL 73,724>73,310完整" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "-0.0067% 中性" },
+      "oi-quality": { "score": 7, "max": 7, "source": "auto", "reasoning": "OI+5.9%, 价格+4.3%, <10%健康" },
+      "liquidation": { "score": 3, "max": 5, "source": "auto", "reasoning": "proxy; OI+5.9%" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "1.18%" },
+      "position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew✓ L/S 2%极端✗ TopTrader 25%✓; 交易所净流出✓" }
+    }
+  },
+  "etfDataSources": ["BullBear/Farside(L0, Apr22: $0)"],
+  "fearGreed": 46,
+  "reference": { "ma50": 71031, "ma200": 85679, "fundingRate": -0.0067, "basisAnnualized": 1.18, "btc1dChange": 0.24, "btc7dChange": 4.27, "volumeRatio": 0.901, "atrPercentile": 24.17 }
+}

@@ -1,0 +1,122 @@
+{
+  "date": "2026-04-11",
+  "btcPrice": 73043.16,
+  "state": "B",
+  "score": 71,
+  "layers": {
+    "cycle": 15.5,
+    "structure": 32,
+    "vulnerability": 23.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest"
+      },
+      "ten-year": {
+        "score": 2.5,
+        "max": 4,
+        "source": "est"
+      },
+      "dxy": {
+        "score": 2.5,
+        "max": 3,
+        "source": "est",
+        "reasoning": "DXY ~98.5, 逼近50D下方"
+      },
+      "risk-appetite": {
+        "score": 2.5,
+        "max": 3,
+        "source": "est"
+      },
+      "etf-cycle": {
+        "score": 2,
+        "max": 4,
+        "source": "est"
+      },
+      "stablecoin": {
+        "score": 1,
+        "max": 3,
+        "source": "est"
+      }
+    },
+    "structure": {
+      "price-vs-ma": {
+        "score": 4,
+        "max": 10,
+        "source": "calc",
+        "reasoning": "$73,043 > 50D($69,106), < 200D"
+      },
+      "ma-arrangement": {
+        "score": 4,
+        "max": 6,
+        "source": "calc",
+        "reasoning": "20D(69173)>50D(69106), 修复确认, 但50D<<200D"
+      },
+      "etf-short-term": {
+        "score": 5,
+        "max": 10,
+        "source": "est"
+      },
+      "coinbase-premium": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "spot-cvd": {
+        "score": 3,
+        "max": 4,
+        "source": "est",
+        "reasoning": "日涨+0.11%, 持平"
+      },
+      "stablecoin-pp": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "relative-strength": {
+        "score": 5,
+        "max": 6,
+        "source": "est"
+      },
+      "wave-structure": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "HH 73.8k(intra), 结构连续"
+      }
+    },
+    "vulnerability": {
+      "funding": {
+        "score": 6,
+        "max": 6,
+        "source": "est"
+      },
+      "oi-quality": {
+        "score": 7,
+        "max": 7,
+        "source": "est"
+      },
+      "liquidation": {
+        "score": 4.5,
+        "max": 5,
+        "source": "est"
+      },
+      "basis": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "position-crowding": {
+        "score": 3,
+        "max": 4,
+        "source": "est"
+      }
+    }
+  },
+  "btc1dChange": 0.11,
+  "backtest": true,
+  "note": "回测重建; 宏观脱敏激活(BTC相对强弱>=5/6连续3日)"
+}

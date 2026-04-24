@@ -1,0 +1,63 @@
+{
+  "date": "2026-04-15",
+  "btcPrice": 74258.01,
+  "totalScore": 68,
+  "state": "B",
+  "previousState": "B",
+  "previousScore": 74,
+  "layers": {
+    "cycle": 16.5,
+    "structure": 32,
+    "vulnerability": 19.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "FFR 3.64% 稳定，2Y 3.78%(利差+14bp)，暂停期中性，PCE 月环比偏高制约激进降息" },
+      "ten-year": { "score": 2.5, "max": 4, "source": "auto", "reasoning": "10Y 4.30%，20D 斜率接近 0 震荡走平" },
+      "dxy": { "score": 3, "max": 3, "source": "auto", "reasoning": "DXY 98.22 < 20D(99.40) < 50D(98.67)，20D 向下" },
+      "risk-appetite": { "score": 3, "max": 3, "source": "auto", "reasoning": "QQQ 628.60 > 50D(600.53)，VIX 18.4 低位" },
+      "etf-cycle": { "score": 3, "max": 4, "source": "AI", "reasoning": "30D +$299M 正向，7D +$2M 基本持平；20日净流为正但近期减弱" },
+      "stablecoin": { "score": 1, "max": 3, "source": "auto", "reasoning": "CoinGecko 429 数据不足，给予中性偏低分" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 4, "max": 10, "source": "auto", "reasoning": "价格 > 50D(69690)，< 200D(87363)，距 200D -15.0%" },
+      "ma-arrangement": { "score": 4, "max": 6, "source": "auto", "reasoning": "排列修复中，20D 上拐，50D 向上" },
+      "etf-short-term": { "score": 5, "max": 10, "source": "AI", "reasoning": "7D 净流 +$2M 勉强为正，最近1日 -$291M(FBTC主导)，流入流出交替" },
+      "coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "Premium 0.050%，接近持平" },
+      "spot-cvd": { "score": 4, "max": 4, "source": "auto", "reasoning": "Taker buy ratio 51.0%，买方主导且 3 日未连续下行" },
+      "stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "auto", "reasoning": "稳定币总量 318.3B，7D +0.76% 30D +1.31%，强扩张" },
+      "relative-strength": { "score": 4, "max": 6, "source": "auto", "reasoning": "BTC 20D 7.9% vs QQQ 4.7%，小幅为正；Dominance 20D 持平 -0.35%" },
+      "wave-structure": { "score": 6, "max": 8, "source": "AI", "reasoning": "连续 HH/HL(65k→70.5k lows, 69k→76k highs)，4/14 测试 76,000 关键阻力未确认突破" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding -0.0093%，基本中性" },
+      "oi-quality": { "score": 5.5, "max": 7, "source": "auto", "reasoning": "价格 7D +4.5%，OI 增幅 13.1%，杠杆温和抬升" },
+      "liquidation": { "score": 2, "max": 5, "source": "auto", "reasoning": "proxy；OI 7D +13.1% 温和抬升；Funding 中性；ATR分位8% + 量比0.90 偏低" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化基差 1.51% < 8%，健康" },
+      "position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew 非极端✓ L/S 2%分位单边✗ TopTrader 12%非极端✓ 交易所净流入假设健康✓" }
+    }
+  },
+  "macroDesensitization": {
+    "active": true,
+    "daysQualified": 7,
+    "todayQualified": false,
+    "note": "BTC相对强弱 4/6，不满足≥5/6，脱敏维持但不计数"
+  },
+  "stateTransition": {
+    "action": "维持",
+    "detail": "B→C需≤57(当前68)，B→A需≥82连续2日(当前68)"
+  },
+  "etfDataSources": ["BullBear Dashboard (Farside via GitHub API)", "WalletPilot"],
+  "fedDataSources": ["FRED DFF", "FRED DGS2", "FRED PCEPI"],
+  "reference": {
+    "fearGreed": { "value": 23, "label": "Extreme Fear" },
+    "funding46dNegative": "CoinDesk: 衍生品资金费率连续46天为负",
+    "strategyBTCPurchase": "Strategy (MicroStrategy) 估计新增 ~7,800 BTC"
+  },
+  "errors": [
+    "stablecoinHistory: CoinGecko 429",
+    "coinglassETF: CoinGlass 404 → AI fallback via BullBear+WalletPilot",
+    "coinglassLiquidation: proxy used",
+    "exchangeNetflow: 数据不可用，假设健康"
+  ]
+}

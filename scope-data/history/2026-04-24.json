@@ -1,0 +1,59 @@
+{
+  "date": "2026-04-24",
+  "btcPrice": 78334,
+  "state": "B",
+  "score": 74,
+  "layers": {
+    "cycle": 18,
+    "structure": 33.5,
+    "vulnerability": 22
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "FFR 3.50-3.75%, 2Y 3.81%(利差+6bps), 核心PCE 3.0%远超2%目标, 暂停期中性偏紧, 全年仅预期1次降息" },
+      "ten-year": { "score": 4, "max": 4, "source": "auto", "reasoning": "10Y 4.30%, 20D斜率-0.132明显下行" },
+      "dxy": { "score": 3, "max": 3, "source": "auto", "reasoning": "DXY 98.66 < 20D(99.05) < 50D(98.78), 20D向下" },
+      "risk-appetite": { "score": 3, "max": 3, "source": "auto", "reasoning": "QQQ 655.32 > 50D(605.48), VIX 19.2低位" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "AI", "reasoning": "20D仍偏负(前5周-$4.3B), 近10D受Apr14-18强流入(+$996M)带动转正, 20D接近持平" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D扩张1.58%, 7D持平-0.04%" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 6, "max": 10, "source": "auto", "reasoning": "价格>50D(71031), <200D(85679), 距200D -8.6%" },
+      "ma-arrangement": { "score": 4, "max": 6, "source": "auto", "reasoning": "排列修复中, 20D上拐, 50D向上" },
+      "etf-short-term": { "score": 7, "max": 10, "source": "AI", "reasoning": "Apr14-18周+$996M(1月中旬以来最强), 5日4天净流入; Apr23=0动量减弱" },
+      "coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "Premium 0.028%, 接近持平" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "auto", "reasoning": "Taker buy ratio 47.4%, 卖方主导" },
+      "stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "auto", "reasoning": "稳定币319.5B, 7D+0.43% 30D+1.72%强扩张" },
+      "relative-strength": { "score": 4, "max": 6, "source": "auto", "reasoning": "BTC 20D+17.0% vs QQQ+11.5%相对收益+5.5%(4/4); Dominance 20D-0.67%(0/2)" },
+      "wave-structure": { "score": 7, "max": 8, "source": "AI", "reasoning": "Mar29以来4连续HH+3连续HL, 50D突破并守住16天, 结构清晰看涨; 200D(85679)尚远" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding -0.0067%, 基本中性" },
+      "oi-quality": { "score": 7, "max": 7, "source": "auto", "reasoning": "价格7D+4.2%, OI增幅5.9%<10%, 健康上涨" },
+      "liquidation": { "score": 3, "max": 5, "source": "auto", "reasoning": "proxy评分; OI 7D+5.9%; Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化基差1.42%<8%, 健康" },
+      "position-crowding": { "score": 2, "max": 3, "source": "auto", "reasoning": "Skew非极端✓; L/S Ratio 0.512分位2%单边偏极✗; TopTrader非极端✓" },
+      "exchange-netflow": { "score": 1, "max": 1, "source": "AI", "reasoning": "数据不可用, 假设健康+1" }
+    }
+  },
+  "etfDataSources": ["BullBear Dashboard(L0: Apr23=0)", "Bitbo(L5: AUM $103.36B)", "stockanalysis(L6: IBIT $61.26B + 新闻)", "WebSearch(Apr14-18周数据)"],
+  "fedDataSources": ["WebSearch(FFR 3.50-3.75%, 2Y 3.81%, PCE 3.0%)"],
+  "rawData": {
+    "btc1dChange": 0.199,
+    "btc7dChange": 4.23,
+    "ma50": 71031,
+    "ma200": 85679,
+    "fundingRate": -0.0067,
+    "oiChange7d": 5.9,
+    "basisAnnualized": 1.42,
+    "fearGreed": 46
+  },
+  "stateTransition": {
+    "previousState": "B",
+    "previousScore": 72,
+    "currentState": "B",
+    "currentScore": 74,
+    "action": "维持B状态",
+    "upgradeProgress": "未触发(74<82)"
+  }
+}

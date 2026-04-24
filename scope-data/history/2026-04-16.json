@@ -1,0 +1,39 @@
+{
+  "date": "2026-04-16",
+  "btcPrice": 74704.87,
+  "state": "B",
+  "prevState": "B",
+  "score": 77,
+  "prevScore": 70,
+  "layers": {
+    "cycle": 19.5,
+    "structure": 36,
+    "vulnerability": 21.5
+  },
+  "indicators": {
+    "cycle.fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "FFR 3.64%, 2Y 3.76%, 利差+12bps, 暂停期中性" },
+    "cycle.ten-year": { "score": 2.5, "max": 4, "source": "AI-补充", "reasoning": "10Y 4.26%(FRED), 震荡走平" },
+    "cycle.dxy": { "score": 3, "max": 3, "source": "auto", "reasoning": "DXY 98.00 < 20D(99.29) < 50D(98.67)" },
+    "cycle.risk-appetite": { "score": 3, "max": 3, "source": "auto", "reasoning": "QQQ 637.40 > 50D, VIX 18.2" },
+    "cycle.etf-cycle": { "score": 4, "max": 4, "source": "AI", "reasoning": "30D +$710M, 7D +$573M" },
+    "cycle.stablecoin": { "score": 3, "max": 3, "source": "auto", "reasoning": "7D +0.11%, 30D +0.27%, 双扩张" },
+    "structure.price-vs-ma": { "score": 5, "max": 10, "source": "auto", "reasoning": "> 50D(69835), < 200D(87178), 距200D -14.3%" },
+    "structure.ma-arrangement": { "score": 4, "max": 6, "source": "auto", "reasoning": "修复中, 20D上拐, 50D向上" },
+    "structure.etf-short-term": { "score": 8, "max": 10, "source": "AI", "reasoning": "1D +$411M, IBIT +$214M主导" },
+    "structure.coinbase-premium": { "score": 2, "max": 3, "source": "auto", "reasoning": "Premium 0.04% 持平" },
+    "structure.spot-cvd": { "score": 2, "max": 4, "source": "auto", "reasoning": "Taker buy 49.3% 中性" },
+    "structure.stablecoin-purchasing-power": { "score": 3, "max": 3, "source": "AI-补充", "reasoning": "DefiLlama故障, 使用今日早前数据318.4B 7D+0.78%" },
+    "structure.relative-strength": { "score": 6, "max": 6, "source": "auto", "reasoning": "BTC 20D +12.5% vs QQQ +5.7%, Dominance +0.64%" },
+    "structure.wave-structure": { "score": 6, "max": 8, "source": "AI", "reasoning": "HL+HH确认看涨修复, 仍在200D下方" },
+    "vulnerability.funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding -0.003% 中性" },
+    "vulnerability.oi-quality": { "score": 7, "max": 7, "source": "auto", "reasoning": "OI +7.9% vs Price +4.1%, 健康上涨" },
+    "vulnerability.liquidation": { "score": 2.5, "max": 5, "source": "auto", "reasoning": "ATR分位2.5% 极低波动" },
+    "vulnerability.basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化1.48% < 8% 健康" },
+    "vulnerability.position-crowding": { "score": 3, "max": 4, "source": "auto+AI", "reasoning": "Skew✓ L/S偏极✗ TopTrader✓ + 交易所净流入+1[数据不可用]" }
+  },
+  "etfDataSources": ["WalletPilot"],
+  "fedDataSources": ["FRED-DFF", "FRED-DGS2", "FRED-DGS10"],
+  "macroDesensitization": { "active": true, "daysQualified": 8 },
+  "fearGreed": 23,
+  "note": "相对强弱跳升至6/6, OI质量满分7/7, 总分从70→77大幅改善"
+}

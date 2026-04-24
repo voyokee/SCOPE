@@ -1,0 +1,127 @@
+{
+  "date": "2026-04-12",
+  "btcPrice": 70740.98,
+  "state": "B",
+  "score": 65,
+  "layers": {
+    "cycle": 15,
+    "structure": 28,
+    "vulnerability": 22
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest"
+      },
+      "ten-year": {
+        "score": 2.5,
+        "max": 4,
+        "source": "est"
+      },
+      "dxy": {
+        "score": 2.5,
+        "max": 3,
+        "source": "est"
+      },
+      "risk-appetite": {
+        "score": 2,
+        "max": 3,
+        "source": "est",
+        "reasoning": "风险资产回调日"
+      },
+      "etf-cycle": {
+        "score": 2,
+        "max": 4,
+        "source": "est"
+      },
+      "stablecoin": {
+        "score": 1,
+        "max": 3,
+        "source": "est"
+      }
+    },
+    "structure": {
+      "price-vs-ma": {
+        "score": 4,
+        "max": 10,
+        "source": "calc",
+        "reasoning": "$70,741 > 50D($69,161), < 200D; 距50D仅+2.3%"
+      },
+      "ma-arrangement": {
+        "score": 4,
+        "max": 6,
+        "source": "calc",
+        "reasoning": "20D(69164)≈50D(69161), 交叉位置"
+      },
+      "etf-short-term": {
+        "score": 4,
+        "max": 10,
+        "source": "est",
+        "reasoning": "ETF 可能有较大流出"
+      },
+      "coinbase-premium": {
+        "score": 2,
+        "max": 3,
+        "source": "est",
+        "reasoning": "下跌日, Premium 大概率缩小"
+      },
+      "spot-cvd": {
+        "score": 2,
+        "max": 4,
+        "source": "est",
+        "reasoning": "日跌-3.15%, 卖方主导"
+      },
+      "stablecoin-pp": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "relative-strength": {
+        "score": 4,
+        "max": 6,
+        "source": "est",
+        "reasoning": "回调日 BTC 可能跌幅大于 QQQ"
+      },
+      "wave-structure": {
+        "score": 5,
+        "max": 8,
+        "source": "AI-backtest",
+        "reasoning": "回调但未破 HL(70.5k > 66.3k), 结构完整"
+      }
+    },
+    "vulnerability": {
+      "funding": {
+        "score": 6,
+        "max": 6,
+        "source": "est"
+      },
+      "oi-quality": {
+        "score": 6,
+        "max": 7,
+        "source": "est",
+        "reasoning": "价格下跌, OI 可能调整"
+      },
+      "liquidation": {
+        "score": 4,
+        "max": 5,
+        "source": "est",
+        "reasoning": "回调增加清算压力"
+      },
+      "basis": {
+        "score": 3,
+        "max": 3,
+        "source": "est"
+      },
+      "position-crowding": {
+        "score": 3,
+        "max": 4,
+        "source": "est"
+      }
+    }
+  },
+  "btc1dChange": -3.15,
+  "backtest": true,
+  "note": "回测重建; 周内最弱日(回调-3.15%), 但65分仍>57(B->C降级线), 状态B保持"
+}

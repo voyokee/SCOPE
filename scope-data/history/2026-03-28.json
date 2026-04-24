@@ -1,0 +1,43 @@
+{
+  "date": "2026-03-28",
+  "btcPrice": 66475.51,
+  "state": "C",
+  "previousState": "C",
+  "previousScore": 52,
+  "score": 46,
+  "layers": {
+    "cycle": 8,
+    "structure": 20.5,
+    "vulnerability": 17.5
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "暂停期偏鹰；2Y从3.38%反弹至3.96%；DotPlot预期2026仅降1次" },
+      "ten-year": { "score": 0, "max": 4, "source": "auto", "reasoning": "10Y 4.42%，20D斜率+0.474加速上行" },
+      "dxy": { "score": 0, "max": 3, "source": "auto", "reasoning": "DXY 100.15 > 20D(99.41) > 50D(98.30)，20D向上" },
+      "risk-appetite": { "score": 0, "max": 3, "source": "auto", "reasoning": "QQQ 562.58 < 50D(606.47)，VIX 31.0上行" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "auto-fallback", "reasoning": "CoinGlass 404，中性fallback" },
+      "stablecoin": { "score": 2, "max": 3, "source": "auto", "reasoning": "30D扩张1.10%，7D持平0.01%" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 0, "max": 10, "source": "auto", "reasoning": "价格66476远低于200D(91326)，距200D -27.2%" },
+      "ma-arrangement": { "score": 2.5, "max": 6, "source": "auto", "reasoning": "均线缠绕，20D=70292 50D=68874 200D=91326" },
+      "etf-short-term": { "score": 5, "max": 10, "source": "auto-fallback", "reasoning": "CoinGlass 404，中性fallback" },
+      "coinbase-premium": { "score": 1, "max": 3, "source": "auto", "reasoning": "Premium -0.062%，轻微为负" },
+      "spot-cvd": { "score": 4, "max": 4, "source": "auto", "reasoning": "Taker buy ratio 51.7%，买方主导" },
+      "stablecoin-purchasing-power": { "score": 1, "max": 3, "source": "auto", "reasoning": "7D -0.16% 30D +1.94%，基本持平" },
+      "relative-strength": { "score": 5, "max": 6, "source": "auto", "reasoning": "BTC vs QQQ 20D相对收益+8.1%显著为正；Dominance 20D持平" },
+      "wave-structure": { "score": 2, "max": 8, "source": "AI", "reasoning": "LH(72026 vs 76000) + LL(65548 vs 65618)，跌破Mar 8关键低点" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "auto", "reasoning": "Funding -0.0076%，基本中性" },
+      "oi-quality": { "score": 4, "max": 7, "source": "auto", "reasoning": "价格7D -3.5%，OI增幅9.7%，中性偏压" },
+      "liquidation": { "score": 2.5, "max": 5, "source": "auto", "reasoning": "proxy: OI 9.7%，Funding中性，价格处于14D range极端位" },
+      "basis": { "score": 3, "max": 3, "source": "auto", "reasoning": "年化基差2.11% < 8%，健康" },
+      "position-crowding": { "score": 2, "max": 4, "source": "auto+AI", "reasoning": "Skew正常✓ L/S极端✗ TopTrader极端✗ 交易所净流入假设健康✓" }
+    }
+  },
+  "macroDesensitization": { "active": false, "daysQualified": 1 },
+  "stateTransition": "none",
+  "errors": ["coinglassETF: 404", "coinglassLiquidation: no data", "farside: 403", "cme-fedwatch: timeout", "exchange-netflow: unavailable"]
+}

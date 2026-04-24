@@ -1,0 +1,36 @@
+{
+    "date": "2026-04-07",
+    "state": "C",
+    "score": 45,
+    "layers": { "cycle": 10, "structure": 13.5, "vulnerability": 21.5 },
+    "btcPrice": 68563.06,
+    "indicators": {
+      "fed-path": { "score": 4, "maxScore": 8, "source": "AI", "note": "Fed Futures Apr/May/Jun均96.36，隐含利率持平，暂停期" },
+      "ten-year": { "score": 1, "maxScore": 4, "source": "auto" },
+      "dxy": { "score": 1, "maxScore": 3, "source": "auto" },
+      "risk-appetite": { "score": 1, "maxScore": 3, "source": "auto" },
+      "etf-cycle": { "score": 1, "maxScore": 4, "source": "AI", "note": "Farside 403, Q1 -$3.8B累计流出, 4月首周仅+$22M极弱" },
+      "stablecoin": { "score": 2, "maxScore": 3, "source": "auto" },
+      "price-vs-ma": { "score": 0, "maxScore": 10, "source": "auto" },
+      "ma-arrangement": { "score": 1, "maxScore": 6, "source": "auto" },
+      "etf-short-term": { "score": 3, "maxScore": 10, "source": "AI", "note": "4月首周+$22M极弱，3月27日单日-$171M" },
+      "coinbase-premium": { "score": 2, "maxScore": 3, "source": "auto" },
+      "spot-cvd": { "score": 0.5, "maxScore": 4, "source": "auto" },
+      "stablecoin-pp": { "score": 3, "maxScore": 3, "source": "auto" },
+      "relative-strength": { "score": 2, "maxScore": 6, "source": "auto" },
+      "wave-structure": { "score": 2, "maxScore": 8, "source": "AI", "note": "LH/LL结构: 76000→72026→69310高点降序; 65000/65712双底支撑" },
+      "funding": { "score": 6, "maxScore": 6, "source": "auto" },
+      "oi-quality": { "score": 4, "maxScore": 7, "source": "auto" },
+      "liquidation": { "score": 4.5, "maxScore": 5, "source": "auto" },
+      "basis": { "score": 3, "maxScore": 3, "source": "auto" },
+      "position-crowding": { "score": 3, "maxScore": 3, "source": "auto" },
+      "exchange-netflow": { "score": 1, "maxScore": 1, "source": "AI", "note": "数据不可用，保守假设健康" }
+    },
+    "rawData": {
+      "btcPrice": 68563.06,
+      "ma50": 68640.97,
+      "ma200": 88919.78,
+      "funding": -0.000315,
+      "fearGreed": 11
+    }
+  }

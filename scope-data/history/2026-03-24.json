@@ -1,0 +1,33 @@
+{
+  "date": "2026-03-24",
+  "totalScore": 52,
+  "layers": { "cycle": 9, "structure": 24.5, "vulnerability": 18.5 },
+  "state": "C",
+  "btcPrice": 69927.4,
+  "stateTransition": null,
+  "indicators": [
+    { "id": "cycle.fed-path", "name": "Fed 路径", "score": 4, "maxScore": 8, "source": "ai", "reasoning": "暂停期，中性，宽松预期稳定但不强 [AI建议]" },
+    { "id": "cycle.ten-year", "name": "10Y 折现率压力", "score": 0, "maxScore": 4, "source": "auto", "reasoning": "10Y 4.39%，20D 斜率 0.416 加速上行" },
+    { "id": "cycle.dxy", "name": "DXY", "score": 0, "maxScore": 3, "source": "auto", "reasoning": "DXY 99.30 > 20D(99.07) > 50D(98.24)，20D 向上" },
+    { "id": "cycle.risk-appetite", "name": "风险偏好(QQQ/VIX)", "score": 1, "maxScore": 3, "source": "auto", "reasoning": "QQQ 弱于 50D，VIX 26.0 中性" },
+    { "id": "cycle.etf-cycle", "name": "ETF 周期水位", "score": 2, "maxScore": 4, "source": "ai", "reasoning": "数据不可用，保守中性" },
+    { "id": "cycle.stablecoin", "name": "稳定币水位", "score": 2, "maxScore": 3, "source": "auto", "reasoning": "稳定币 30D 扩张 1.85%，7D 持平 0.00%" },
+    { "id": "structure.price-vs-ma", "name": "价格 vs 50D/200D", "score": 3, "maxScore": 10, "source": "auto", "reasoning": "价格刚突破 50D(69049)，距 200D -24.1%，修复初期 [已修正bug]" },
+    { "id": "structure.ma-arrangement", "name": "均线排列与斜率", "score": 4, "maxScore": 6, "source": "auto", "reasoning": "排列修复中，20D 上拐，50D 向上" },
+    { "id": "structure.etf-short-term", "name": "ETF 短期承接", "score": 5, "maxScore": 10, "source": "ai", "reasoning": "数据不可用，保守中性" },
+    { "id": "structure.onchain-spot", "name": "场内现货承接", "score": 5.5, "maxScore": 10, "source": "mixed", "reasoning": "CB Premium 2/3[A] + Spot CVD 2/4[不可用] + 稳定币入所 1.5/3[不可用]" },
+    { "id": "structure.relative-strength", "name": "BTC 相对强弱", "score": 3, "maxScore": 6, "source": "auto", "reasoning": "BTC 20D -3.8% vs QQQ -3.5%，接近持平(2/4) + Dominance 数据不足(1/2)" },
+    { "id": "structure.wave-structure", "name": "波段结构", "score": 4, "maxScore": 8, "source": "ai", "reasoning": "低点持续抬升(HL)，但高点76k→71.8k形成LH，震荡偏修复" },
+    { "id": "vulnerability.funding", "name": "Funding", "score": 6, "maxScore": 6, "source": "auto", "reasoning": "Funding 0.0037%，基本中性" },
+    { "id": "vulnerability.oi-quality", "name": "OI 质量", "score": 4, "maxScore": 7, "source": "auto", "reasoning": "价格 7D -5.4%，OI 增幅 -3.3%，中性" },
+    { "id": "vulnerability.liquidation", "name": "清算距离", "score": 2.5, "maxScore": 5, "source": "ai", "reasoning": "数据不可用(JS渲染)，保守中性" },
+    { "id": "vulnerability.basis", "name": "年化 Basis", "score": 3, "maxScore": 3, "source": "auto", "reasoning": "年化基差 3.17% < 8%，健康" },
+    { "id": "vulnerability.position-crowding", "name": "仓位一致性", "score": 3, "maxScore": 4, "source": "mixed", "reasoning": "脚本3项 2/3[A] + 交易所净流入 1/1[不可用，保守]" }
+  ],
+  "specialRules": {
+    "oiFundingCap": "不触发 (Funding 0.0037% < 0.03%)",
+    "macroDesensitization": "不激活 (相对强弱 3/6 < 5/6)",
+    "circuitBreaker": "未触发",
+    "fastReEntry": "不适用"
+  }
+}

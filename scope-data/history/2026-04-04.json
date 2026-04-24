@@ -1,0 +1,48 @@
+{
+  "date": "2026-04-04",
+  "btcPrice": 67300,
+  "state": "C",
+  "score": 45,
+  "reconstructed": true,
+  "reconstructionNote": "周六，基于Apr3(46)和Apr7(45)锚点+priceHistory插值重建",
+  "layers": {
+    "cycle": 10,
+    "structure": 14,
+    "vulnerability": 21
+  },
+  "indicators": {
+    "cycle": {
+      "fed-path": { "score": 4, "max": 8, "source": "AI", "reasoning": "延续Apr3评估：暂停期中性" },
+      "ten-year": { "score": 0, "max": 4, "source": "estimated", "reasoning": "周六无新数据，延续Apr3(10Y 4.33%上行)" },
+      "dxy": { "score": 1, "max": 3, "source": "estimated", "reasoning": "延续Apr3(DXY 100.02)" },
+      "risk-appetite": { "score": 1, "max": 3, "source": "estimated", "reasoning": "周六无股市数据，延续Apr3(QQQ弱,VIX 23.9)" },
+      "etf-cycle": { "score": 2, "max": 4, "source": "estimated", "reasoning": "周末无ETF交易，延续fallback" },
+      "stablecoin": { "score": 2, "max": 3, "source": "estimated", "reasoning": "延续Apr3(30D+0.50%,7D持平)" }
+    },
+    "structure": {
+      "price-vs-ma": { "score": 0, "max": 10, "source": "estimated", "reasoning": "67300<50D(~68686)<<200D(~89800)，距200D>25%" },
+      "ma-arrangement": { "score": 2, "max": 6, "source": "estimated", "reasoning": "均线缠绕，从Apr3的2.5向Apr7的1过渡" },
+      "etf-short-term": { "score": 4.5, "max": 10, "source": "estimated", "reasoning": "周末无新ETF数据，从Apr3的5向Apr7的3过渡" },
+      "coinbase-premium": { "score": 1, "max": 3, "source": "estimated", "reasoning": "延续Apr3(Premium -0.022%)" },
+      "spot-cvd": { "score": 0.5, "max": 4, "source": "estimated", "reasoning": "卖方持续主导" },
+      "stablecoin-purchasing-power": { "score": 2, "max": 3, "source": "estimated", "reasoning": "延续Apr3(314.9B)" },
+      "relative-strength": { "score": 3, "max": 6, "source": "estimated", "reasoning": "周末无QQQ对比，延续Apr3" },
+      "wave-structure": { "score": 1, "max": 8, "source": "estimated", "reasoning": "仍为LH/LL结构，67300未改变格局" }
+    },
+    "vulnerability": {
+      "funding": { "score": 6, "max": 6, "source": "estimated", "reasoning": "中性区间" },
+      "oi-quality": { "score": 4, "max": 7, "source": "estimated", "reasoning": "价格横盘，OI稳定" },
+      "liquidation": { "score": 4, "max": 5, "source": "estimated", "reasoning": "proxy：OI平稳+Funding中性" },
+      "basis": { "score": 3, "max": 3, "source": "estimated", "reasoning": "年化基差<8%" },
+      "position-crowding": { "score": 3, "max": 3, "source": "estimated", "reasoning": "延续Apr3评估" },
+      "exchange-netflow": { "score": 1, "max": 1, "source": "estimated", "reasoning": "数据不可用，假设健康" }
+    }
+  },
+  "rawData": {
+    "btc1dChange": 0.5,
+    "ma50": 68686,
+    "ma200": 89800,
+    "fearGreed": 9
+  },
+  "previousState": { "date": "2026-04-03", "state": "C", "score": 46 }
+}
