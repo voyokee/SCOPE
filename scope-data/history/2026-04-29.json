@@ -1,0 +1,37 @@
+{
+  "date": "2026-04-29",
+  "btcPrice": 76950.06,
+  "state": "B",
+  "score": 67,
+  "layers": {
+    "cycle": 15,
+    "structure": 32,
+    "vulnerability": 20
+  },
+  "indicators": {
+    "fed_path": { "score": 4, "max": 8, "source": "AI", "note": "FFR 3.75%, 2Y 3.85% (2Y-FFR +10bp), 暂停期中性, PCE 2.8%, 2026年仅1次降息预期, 今日FOMC维持不变" },
+    "10y_rate": { "score": 2, "max": 4, "source": "auto", "note": "10Y 4.35%, slope -0.01, 52nd pctile, 震荡走平" },
+    "dxy": { "score": 1, "max": 3, "source": "auto", "note": "DXY 98.7 at 20D MA, 85th pctile高位, 震荡中性" },
+    "qqq_vix": { "score": 3, "max": 3, "source": "auto", "note": "VIX 17.8低位, 风险偏好90th pctile, 纳指站上50D" },
+    "etf_cycle": { "score": 3, "max": 4, "source": "AI", "note": "14D净流+$2.19B显著正, 但近7D均值$83.3M/天(前7D $230.2M/天), 10D一般" },
+    "stablecoin_cycle": { "score": 2, "max": 3, "source": "auto", "note": "30D扩张+2.10%, 7D持平-0.03%" },
+    "price_vs_ma": { "score": 7, "max": 10, "source": "auto", "note": ">50D(72104), <200D(84429), 距200D -8.9%; 量积蓄量比0.61+ATR低位→+1" },
+    "ma_arrangement": { "score": 4, "max": 6, "source": "auto", "note": "排列修复中, 20D上拐, 50D向上" },
+    "etf_short_term": { "score": 7, "max": 10, "source": "AI", "note": "5D净正~$416M, ~3/5天净流入, 今日+$22.5M; 趋势放缓(从$230M/天降至$83M/天)" },
+    "coinbase_premium": { "score": 2, "max": 3, "source": "auto", "note": "Premium -0.014%, 接近持平" },
+    "spot_cvd": { "score": 4, "max": 4, "source": "auto", "note": "Taker buy 58.2%, 买方主导, 3日未连续下行" },
+    "stablecoin_power": { "score": 1, "max": 3, "source": "auto", "note": "总量319.5B, 7D -0.23%, 30D +1.55%, 基本持平" },
+    "relative_strength": { "score": 1, "max": 6, "source": "auto", "note": "20D: BTC +7.2% vs QQQ +17.8%, 明显为负(0/4); Dominance 20D持平+0.11%(1/2)" },
+    "wave_structure": { "score": 6, "max": 8, "source": "AI", "note": "HH/HL序列: SH系列79485>78333>76000 HH, SL系列76459>73762>65000 HL; 但仍低于200D MA, 属中期修复" },
+    "funding": { "score": 6, "max": 6, "source": "auto", "note": "Funding 0.0013%, 中性" },
+    "oi_quality": { "score": 4, "max": 7, "source": "auto", "note": "价格7D -1.6%, OI增幅3.0%, 中性; Funding<0.03%无上限修正" },
+    "liquidation": { "score": 3, "max": 5, "source": "auto", "note": "proxy; 假平静扣分: ATR分位极低+量比0.61<0.65" },
+    "basis": { "score": 3, "max": 3, "source": "auto", "note": "年化基差0.74%, 健康" },
+    "position_consistency": { "score": 4, "max": 4, "source": "auto+AI", "note": "Skew非极端✓, L/S 58%在20-80%区间✓, TopTrader分位32%非极端✓; 交易所净流入[数据不可用]假设健康✓" }
+  },
+  "etfDataSources": ["BullBear-GitHub-L0 (Farside源)", "Bitbo-L4 (AUM参考)"],
+  "macroDesensitization": { "active": false, "daysQualified": 0 },
+  "circuitBreaker": { "active": false },
+  "btc1dChange": 0.795,
+  "btc7dChange": -1.57
+}
